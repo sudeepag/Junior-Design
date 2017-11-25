@@ -1,0 +1,125 @@
+{% extends 'dashboard.html' %}
+
+{% block page_name %}
+	{{page_name}}
+{% endblock page_name %}
+
+{% block content %}
+
+<div class="mdl-cell--8-col content-goals">
+	<div class="mdl-mdl-cell--12-col content-header">
+		Goals in progress
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+ 			 Add Goal
+		</button>
+		<hr>
+	</div>
+
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+		<div class="goal-action">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+	  			Add work
+			</button>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+	  			Complete
+			</button>
+		</div>
+
+
+		<div class="mdl-cell goal-card-description">
+			<div class="mdl-cell mdl-cell--12-col project-card-header">
+				Complete Under and Above short story
+				<hr>
+			</div>
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="mdl-cell--12-col">
+					<b>Work Contributed: </b>450 words
+				</div>
+				<div class="mdl-cell--12-col">
+					<b>Last Updated: </b> Nov. 5 at 4:14pm
+				</div>
+			</div>
+			 
+		</div>
+	</div>
+	<div class="mdl-grid mdl-grid mdl-cell--12-col content-header">
+		Completed Goals
+		<hr>
+	</div>
+
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+		<div class="goal-action">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
+	  			Revert
+			</button>
+		</div>
+
+
+		<div class="mdl-cell goal-card-description">
+			<div class="mdl-cell mdl-cell--12-col project-card-header">
+				Outline Under and Above
+				<hr>
+			</div>
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="mdl-cell--12-col">
+					<b>Work Contributed: </b>220 words
+				</div>
+				<div class="mdl-cell--12-col">
+					<b>Completd on: </b> Nov. 4 at 3:14pm
+				</div>
+			</div>
+			 
+		</div>
+	</div>
+
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+		<div class="goal-action">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
+	  			Revert
+			</button>
+		</div>
+
+
+		<div class="mdl-cell goal-card-description">
+			<div class="mdl-cell mdl-cell--12-col project-card-header">
+				Practice writing stream of consciousness
+				<hr>
+			</div>
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="mdl-cell--12-col">
+					<b>Work Contributed: </b>345 words
+				</div>
+				<div class="mdl-cell--12-col">
+					<b>Completd on: </b> Oct 23 at 9:14pm
+				</div>
+			</div>
+			 
+		</div>
+	</div>
+
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+		<div class="goal-action">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
+	  			Revert
+			</button>
+		</div>
+
+
+		<div class="mdl-cell goal-card-description">
+			<div class="mdl-cell mdl-cell--12-col project-card-header">
+				Pen whatever comes to mind!
+				<hr>
+			</div>
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="mdl-cell--12-col">
+					<b>Work Contributed: </b>590 words
+				</div>
+				<div class="mdl-cell--12-col">
+					<b>Completd on: </b> Oct 21 at 1:14pm
+				</div>
+			</div>
+			 
+		</div>
+	</div>
+</div>
+{% endblock content %}

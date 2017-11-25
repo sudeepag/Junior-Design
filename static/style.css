@@ -1,0 +1,80 @@
+.mdl-layout__content {
+	height: calc(100vh);
+}
+
+.project-card {
+	height:120px;
+
+}
+
+
+.content-header {
+    font-size: 30px;
+    color: #757575 !important
+}
+
+.content-header hr {
+    margin: 11px 0px 0px 0px;
+    width: 100%;
+}
+
+.content-goals {
+    margin:15px;
+}
+
+.goal-action {
+    width: 104px;
+    float: left;
+    height: 50%;
+    margin-top:9px;
+}
+
+.goal-action button {
+    margin-top: 10px;
+	height:50%;
+	line-height:inherit;
+    width:100%;
+}
+
+.goal-card-description {
+	width: calc(100% - 120px);
+
+}
+
+.project-circle {
+    border-radius: 50%;
+    color: white;
+    background: #757575;
+    font-weight: bold;
+    font-size: 50px !important;
+    text-align: center;
+    vertical-align: middle;
+    height: 100px;
+    width: 100px;
+    float: left;
+}
+
+.project-add-circle {
+	background-color: #5cb85c !important;
+}
+
+.project-circle-text {
+    margin-top:40%;
+}
+
+.project-card-description {
+	width: calc(100% - 116px);
+}
+
+.project-card:hover {
+	background-color: #e8eced !important;
+	cursor: pointer
+}
+
+.project-card-header {
+    font-size: 20px;
+}
+
+.project-card-header > hr {
+	margin: 4px 0px 0px 0px;
+}
