@@ -106,6 +106,11 @@
 	            }
 	        });
 		});
+
+		$(document).on('click', '.complete-goal-button', function() {
+			var card = $(this).closest('.goal-card');
+			card.prependTo('.completed-goals');
+		});
 	</script>
 {% endblock scripts %}
 
@@ -118,117 +123,120 @@
 		</button>
 		<hr>
 	</div>
-
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
-		<div class="goal-action">
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
-	  			Add work
-			</button>
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-	  			Complete
-			</button>
-		</div>
-		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col goal-card-header">
-				Complete Under and Above short story
-				<hr>
+	<div class="in-progress-goals">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="Complete Under and Above short story" data-total=450 data-updated="March 25 2015 09:56:24">
+			<div class="goal-action">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
+		  			Add work
+				</button>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect complete-goal-button">
+		  			Complete
+				</button>
 			</div>
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="mdl-cell--12-col">
-					<b>Words Added: </b>450 words
+			<div class="mdl-cell goal-card-description">
+				<div class="mdl-cell mdl-cell--12-col goal-card-header">
+					Complete Under and Above short story
+					<hr>
 				</div>
-				<div class="mdl-cell--12-col">
-					<b>Last Updated: </b> Nov. 5 at 4:14pm
+				<div class="mdl-cell mdl-cell--12-col">
+					<div class="mdl-cell--12-col">
+						<b>Words Added: </b>450 words
+					</div>
+					<div class="mdl-cell--12-col">
+						<b>Last Updated: </b> Nov. 5 at 4:14pm
+					</div>
 				</div>
+				<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+	  				Contribution History
+				</button>
 			</div>
-			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-  				Contribution History
-			</button>
-		</div>
+		</div>	
 	</div>
+
 	<div class="mdl-grid mdl-grid mdl-cell--12-col content-header">
 		Completed Goals
 		<hr>
 	</div>
+	<div class="completed-goals">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
+			<div class="goal-action">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
+		  			Revert
+				</button>
+			</div>
 
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
-		<div class="goal-action">
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
-	  			Revert
-			</button>
+
+			<div class="mdl-cell goal-card-description">
+				<div class="mdl-cell mdl-cell--12-col goal-card-header">
+					Outline Under and Above
+					<hr>
+				</div>
+				<div class="mdl-cell mdl-cell--12-col">
+					<div class="mdl-cell--12-col">
+						<b>Words Added: </b>220 words
+					</div>
+					<div class="mdl-cell--12-col">
+						<b>Completd on: </b> Nov. 4 at 3:14pm
+					</div>
+				</div>
+	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+	  				Contribution History
+				</button>
+			</div>
 		</div>
 
-
-		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col goal-card-header">
-				Outline Under and Above
-				<hr>
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
+			<div class="goal-action">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
+		  			Revert
+				</button>
 			</div>
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="mdl-cell--12-col">
-					<b>Words Added: </b>220 words
+
+
+			<div class="mdl-cell goal-card-description">
+				<div class="mdl-cell mdl-cell--12-col goal-card-header">
+					Practice writing stream of consciousness
+					<hr>
 				</div>
-				<div class="mdl-cell--12-col">
-					<b>Completd on: </b> Nov. 4 at 3:14pm
+				<div class="mdl-cell mdl-cell--12-col">
+					<div class="mdl-cell--12-col">
+						<b>Words Added: </b>345 words
+					</div>
+					<div class="mdl-cell--12-col">
+						<b>Completd on: </b> Oct 23 at 9:14pm
+					</div>
 				</div>
+	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+	  				Contribution History
+				</button>
 			</div>
- 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-  				Contribution History
-			</button>
-		</div>
-	</div>
-
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
-		<div class="goal-action">
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
-	  			Revert
-			</button>
-		</div>
-
-
-		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col goal-card-header">
-				Practice writing stream of consciousness
-				<hr>
-			</div>
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="mdl-cell--12-col">
-					<b>Words Added: </b>345 words
-				</div>
-				<div class="mdl-cell--12-col">
-					<b>Completd on: </b> Oct 23 at 9:14pm
-				</div>
-			</div>
- 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-  				Contribution History
-			</button>
-		</div>
-	</div>
-
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
-		<div class="goal-action">
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
-	  			Revert
-			</button>
 		</div>
 
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
+			<div class="goal-action">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
+		  			Revert
+				</button>
+			</div>
 
-		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col goal-card-header">
-				Pen whatever comes to mind!
-				<hr>
-			</div>
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="mdl-cell--12-col">
-					<b>Words Added: </b>590 words
+
+			<div class="mdl-cell goal-card-description">
+				<div class="mdl-cell mdl-cell--12-col goal-card-header">
+					Pen whatever comes to mind!
+					<hr>
 				</div>
-				<div class="mdl-cell--12-col">
-					<b>Completd on: </b> Oct 21 at 1:14pm
+				<div class="mdl-cell mdl-cell--12-col">
+					<div class="mdl-cell--12-col">
+						<b>Words Added: </b>590 words
+					</div>
+					<div class="mdl-cell--12-col">
+						<b>Completd on: </b> Oct 21 at 1:14pm
+					</div>
 				</div>
+	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+	  				Contribution History
+				</button>
 			</div>
- 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-  				Contribution History
-			</button>
 		</div>
 	</div>
 </div>
