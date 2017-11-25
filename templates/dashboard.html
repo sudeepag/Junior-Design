@@ -231,6 +231,22 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='mdl-jquery-modal-dialog.css') }}">
     <script src="{{url_for('static', filename='mdl-jquery-modal-dialog.js')}}"></script>
+    <script src="{{url_for('static', filename='moment.js')}}"></script>
+    <script>
+      // Commonly used string formatting function
+      // Usage: "{} {} {}".format('123', '321', 125) --> '123 321 125'
+      {% raw %}
+        String.prototype.format = function () {
+          var args = arguments;
+          return this.replace(/\{\{|\}\}|\{(\d+)\}/g, function (m, n) {
+            if (m == "{{") { return "{"; }
+            if (m == "}}") { return "}"; }
+            return args[n];
+          });
+        };
+      {% endraw %}
+
+    </script>
     {% block scripts %}
     {% endblock scripts %}
   </body>

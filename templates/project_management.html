@@ -82,6 +82,36 @@
 			</button>
 		`;
 
+		var newGoalFormat = `
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" data-total=0 data-updated="{1}">
+				<div class="goal-action">
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
+			  			Add work
+					</button>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect complete-goal-button">
+			  			Complete
+					</button>
+				</div>
+				<div class="mdl-cell goal-card-description">
+					<div class="mdl-cell mdl-cell--12-col goal-card-header">
+						{2}
+						<hr>
+					</div>
+					<div class="mdl-cell mdl-cell--12-col">
+						<div class="mdl-cell--12-col">
+							<b>Words Added: </b>0 words
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Last Updated: </b> {3}
+						</div>
+					</div>
+					<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+		  				Contribution History
+					</button>
+				</div>
+			</div>	
+		`;
+
 		$('#add-goal-button').click(function() {
 			showDialog({
 		        text: addGoalForm,
@@ -90,9 +120,22 @@
 		        },
 		        positive: {
 	            	title: 'Add Goal',
-	            },
-	            onClick: function (e) {
-	                alert('Goal added!');
+	            	onClick: function (e) {
+	            		var goal = $("#goal").val();
+	            		if (goal) {
+	            			var currentTime = moment();
+	            			var newGoalHtml =  newGoalFormat.format(
+									goal,
+									currentTime.format('MMMM Do YYYY, h:mm:ss a'),
+									goal,
+									currentTime.calendar());
+	            			var element = document.getElementsByClassName('in-progress-goals')[0]
+	            			$('.in-progress-goals').prepend(newGoalHtml);
+	            			//element.insertAdjacentHTML('beforeend', newGoalHtml)
+	            		} else {
+	            			alert("Invalid goal.");
+	            		}
+	            	}
 	            }
 	        });
 		});
@@ -105,9 +148,10 @@
 		        },
 		        positive: {
 	            	title: 'Add Work',
-	            },
-	            onClick: function (e) {
-	                alert('Contribution added! Keep going.');
+	            	  onClick: function (e) {
+	                	alert('Contribution added! Keep going.');
+	                	return false
+	            	}
 	            }
 	        });
 		});
@@ -141,6 +185,11 @@
 			buttonSection.empty()
 			buttonSection.html(inProgressButtons)
 		});
+
+		function addGoalForm() {
+			alert("FOOBAR");
+			return true;
+		}
 	</script>
 {% endblock scripts %}
 
