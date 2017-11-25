@@ -5,18 +5,16 @@
 {% endblock page_name %}
 
 {% block content %}
-<<<<<<< HEAD
-
 <div class="mdl-cell--8-col content-goals">
 	<div class="mdl-mdl-cell--12-col content-header">
 		Goals in progress
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
- 			 Add Goal
+		<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--mini-fab mdl-button--colored">
+		  <i class="material-icons">add</i>
 		</button>
 		<hr>
 	</div>
 
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
 		<div class="goal-action">
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 	  			Add work
@@ -25,22 +23,22 @@
 	  			Complete
 			</button>
 		</div>
-
-
 		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col project-card-header">
+			<div class="mdl-cell mdl-cell--12-col goal-card-header">
 				Complete Under and Above short story
 				<hr>
 			</div>
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="mdl-cell--12-col">
-					<b>Work Contributed: </b>450 words
+					<b>Words Added: </b>450 words
 				</div>
 				<div class="mdl-cell--12-col">
 					<b>Last Updated: </b> Nov. 5 at 4:14pm
 				</div>
 			</div>
-			 
+			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+  				Contribution History
+			</button>
 		</div>
 	</div>
 	<div class="mdl-grid mdl-grid mdl-cell--12-col content-header">
@@ -48,7 +46,7 @@
 		<hr>
 	</div>
 
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
 		<div class="goal-action">
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
 	  			Revert
@@ -57,23 +55,25 @@
 
 
 		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col project-card-header">
+			<div class="mdl-cell mdl-cell--12-col goal-card-header">
 				Outline Under and Above
 				<hr>
 			</div>
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="mdl-cell--12-col">
-					<b>Work Contributed: </b>220 words
+					<b>Words Added: </b>220 words
 				</div>
 				<div class="mdl-cell--12-col">
 					<b>Completd on: </b> Nov. 4 at 3:14pm
 				</div>
 			</div>
-			 
+ 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+  				Contribution History
+			</button>
 		</div>
 	</div>
 
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
 		<div class="goal-action">
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
 	  			Revert
@@ -82,23 +82,25 @@
 
 
 		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col project-card-header">
+			<div class="mdl-cell mdl-cell--12-col goal-card-header">
 				Practice writing stream of consciousness
 				<hr>
 			</div>
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="mdl-cell--12-col">
-					<b>Work Contributed: </b>345 words
+					<b>Words Added: </b>345 words
 				</div>
 				<div class="mdl-cell--12-col">
 					<b>Completd on: </b> Oct 23 at 9:14pm
 				</div>
 			</div>
-			 
+ 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+  				Contribution History
+			</button>
 		</div>
 	</div>
 
-	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col project-card">
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
 		<div class="goal-action">
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
 	  			Revert
@@ -107,47 +109,53 @@
 
 
 		<div class="mdl-cell goal-card-description">
-			<div class="mdl-cell mdl-cell--12-col project-card-header">
+			<div class="mdl-cell mdl-cell--12-col goal-card-header">
 				Pen whatever comes to mind!
 				<hr>
 			</div>
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="mdl-cell--12-col">
-					<b>Work Contributed: </b>590 words
+					<b>Words Added: </b>590 words
 				</div>
 				<div class="mdl-cell--12-col">
 					<b>Completd on: </b> Oct 21 at 1:14pm
 				</div>
 			</div>
-			 
+ 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+  				Contribution History
+			</button>
 		</div>
 	</div>
 </div>
-=======
-<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card">
-	<div class="goal-checkbox">
-		<div class="project-circle-text">
-			P
-		</div>
-	</div>
-
-	<div class="mdl-cell project-card-description">
-		<div class="mdl-cell mdl-cell--12-col project-card-header">
-			Personal Journal of Short Stories
+<div class="mdl-color--white mdl-shadow--8dp mdl-cell--4-col project-overview">
+	<div class="mdl-grid">
+		<div class="mdl-grid mdl-grid mdl-cell--12-col content-header">
+			<div class="material-icons">assignment</div> Project Overview
 			<hr>
 		</div>
-		<div class="mdl-cell mdl-cell--12-col">
-			<div class="mdl-cell--12-col">
-				<b>Current Goal: </b>Complete Under and Above short story
-			</div>
-			<div class="mdl-cell--12-col">
-				<b>Last Updated: </b> Nov. 5 at 4:14pm
-			</div>
+		<ul class="demo-list-item mdl-list">
+			<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+				  <b>Creation Date: </b>Oct 21
+				</span>
+				</li>
+				<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+				  <b>Number of Contributions: </b>6
+				</span>
+				</li>
+				<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+				  <b>Total Words Added: </b>1605
+				</span>
+			</li>
+		</ul>
+		<div class="mdl-grid mdl-grid mdl-cell--12-col">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored analytics-button">
+	  			<div class="material-icons">show_chart</div> View Analytics
+			</button>
 		</div>
-		 
 	</div>
 </div>
 
-
->>>>>>> d8c3e9f7b77b682d5ace6c125af8cda896aac906
 {% endblock content %}
