@@ -3,7 +3,7 @@
 }
 
 .project-card {
-	height:120px;
+	height:140px;
 
 }
 
@@ -92,5 +92,13 @@
 }
 
 .analytics-button {
+    width:100%;
+}
+
+.modal-form .mdl-textfield {
+    width:100%;
+}
+
+.full-width {
     width:100%;
 }

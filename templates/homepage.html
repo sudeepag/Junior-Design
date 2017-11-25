@@ -4,16 +4,25 @@
 	{{page_name}}
 {% endblock page_name %}
 
+{% block scripts %}
+<script>
+$(document).on('click', '.project-card', function() {
+	window.location.replace('/projects/' + $(this).attr('data-name'));
+	console.log($(this).attr('data-name'));
+});
+</script>
+{% endblock scripts %}
+
 {% block content %}
 
-<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card">
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
 	<div class="project-circle">
 		<div class="project-circle-text">
 			P
 		</div>
 	</div>
 
-	<div class="mdl-cell project-card-description">
+	<div class="mdl-cell project-card-description" >
 		<div class="mdl-cell mdl-cell--12-col project-card-header">
 			Personal Journal of Short Stories
 			<hr>
@@ -30,7 +39,7 @@
 	</div>
 </div>
 
-<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card">
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="AE Research">
 	<div class="project-circle">
 		<div class="project-circle-text">
 			A
