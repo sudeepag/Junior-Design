@@ -67,6 +67,21 @@
 			  </li>
 			</ul>
 		`;
+
+		var completedGoalButton = `
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
+	  			Revert
+			</button>
+		`;
+		var inProgressButtons = `
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
+	  			Add work
+			</button>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect complete-goal-button">
+	  			Complete
+			</button>
+		`;
+
 		$('#add-goal-button').click(function() {
 			showDialog({
 		        text: addGoalForm,
@@ -110,6 +125,21 @@
 		$(document).on('click', '.complete-goal-button', function() {
 			var card = $(this).closest('.goal-card');
 			card.prependTo('.completed-goals');
+
+			// Clears the buttons sections and updates it with the revert button
+			var buttonSection = card.find('.goal-action');
+			buttonSection.empty()
+			buttonSection.html(completedGoalButton)
+		});
+
+		$(document).on('click', '.revert-button', function() {
+			var card = $(this).closest('.goal-card');
+			card.prependTo('.in-progress-goals');
+
+			// Clears the buttons sections and updates it with the add work/complete buttons
+			var buttonSection = card.find('.goal-action');
+			buttonSection.empty()
+			buttonSection.html(inProgressButtons)
 		});
 	</script>
 {% endblock scripts %}
