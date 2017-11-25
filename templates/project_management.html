@@ -99,10 +99,10 @@
 					</div>
 					<div class="mdl-cell mdl-cell--12-col">
 						<div class="mdl-cell--12-col">
-							<b>Words Added: </b>0 words
+							<b>Words Added: </b><div class='total-words'>0 words</div>
 						</div>
 						<div class="mdl-cell--12-col">
-							<b>Last Updated: </b> {3}
+							<b>Last Updated: </b><div class='last-updated'>{3}</div>
 						</div>
 					</div>
 					<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
@@ -141,6 +141,7 @@
 		});
 
         $(document).on('click', '.add-work-button', function() {
+			var card = $(this).closest('.goal-card');
 			showDialog({
 		        text: addWorkForm,
 		        negative: {
@@ -149,8 +150,16 @@
 		        positive: {
 	            	title: 'Add Work',
 	            	  onClick: function (e) {
-	                	alert('Contribution added! Keep going.');
-	                	return false
+	            	  	var workCount = $('#number').val();
+	            	  	if (workCount) {
+	            	  		var currentTime = moment();
+    	  					card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
+    	  					card.attr('data-total', parseInt(card.attr('data-total')) + parseInt(workCount));
+    	  					card.find('.total-words').text('{0} words'.format(card.attr('data-total')));
+    	  					card.find('.last-updated').text(currentTime.calendar());
+	            	  	} else {
+	            	  		alert("Invalid number.");
+	            	  	}
 	            	}
 	            }
 	        });
@@ -219,10 +228,10 @@
 				</div>
 				<div class="mdl-cell mdl-cell--12-col">
 					<div class="mdl-cell--12-col">
-						<b>Words Added: </b>450 words
+						<b>Words Added: </b><div class='total-words'>450 words</div>
 					</div>
 					<div class="mdl-cell--12-col">
-						<b>Last Updated: </b> Nov. 5 at 4:14pm
+						<b>Last Updated: </b><div class='last-updated'>Nov. 5 at 4:14pm</div>
 					</div>
 				</div>
 				<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
@@ -252,10 +261,10 @@
 				</div>
 				<div class="mdl-cell mdl-cell--12-col">
 					<div class="mdl-cell--12-col">
-						<b>Words Added: </b>220 words
+						<b>Words Added: </b><div class='total-words'>220 words</div>
 					</div>
 					<div class="mdl-cell--12-col">
-						<b>Completd on: </b> Nov. 4 at 3:14pm
+						<b>Completd on: </b><div class='last-updated'>Nov. 4 at 3:14pm</div>
 					</div>
 				</div>
 	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
@@ -279,10 +288,10 @@
 				</div>
 				<div class="mdl-cell mdl-cell--12-col">
 					<div class="mdl-cell--12-col">
-						<b>Words Added: </b>345 words
+						<b>Words Added: </b><div class='total-words'>345 words</div>
 					</div>
 					<div class="mdl-cell--12-col">
-						<b>Completd on: </b> Oct 23 at 9:14pm
+						<b>Completd on: </b><div class='last-updated'>Oct 23 at 9:14pm</div>
 					</div>
 				</div>
 	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
@@ -306,10 +315,10 @@
 				</div>
 				<div class="mdl-cell mdl-cell--12-col">
 					<div class="mdl-cell--12-col">
-						<b>Words Added: </b>590 words
+						<b>Words Added: </b><div class='total-words'>590 words</div>
 					</div>
 					<div class="mdl-cell--12-col">
-						<b>Completd on: </b> Oct 21 at 1:14pm
+						<b>Completd on: </b><div class='last-updated'>Oct 21 at 1:14pm</div>
 					</div>
 				</div>
 	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
