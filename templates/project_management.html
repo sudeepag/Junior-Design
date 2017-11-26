@@ -6,6 +6,12 @@
 
 {% block scripts %}
 	<script>
+		$(document).on('keyup keypress', 'form input[type="text"]', function(e) {
+		  if(e.which == 13) {
+		    e.preventDefault();
+		    return false;
+		  }
+		});	
 		var addGoalForm = `
 			<form action="#" class="modal-form">
 				<div class="mdl-textfield mdl-js-textfield">
