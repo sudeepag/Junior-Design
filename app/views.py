@@ -1,8 +1,8 @@
-from flask import Flask, render_template
+from flask import render_template, request, redirect, url_for, session
 from app import app
+from app.model import DatabaseHelper
 
-# app = Flask(__name__)
-# app.config.update(TEMPLATES_AUTO_RELOAD=True)
+db = DatabaseHelper()
 
 @app.route('/')
 def root():
