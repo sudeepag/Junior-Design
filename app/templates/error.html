@@ -1,0 +1,49 @@
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="static/images/favicon.png">
+    <title>Ooopss...</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='images/android-desktop.png') }}">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="{{ url_for('static', filename='images/akpsi-logo.png') }}">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700">
+    <!== |Roboto:100,300,300i,400,400i,500,700 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Materialize CSS -->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize/materialize.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/override.css') }}"  media="screen,projection"/>
+
+
+    <!-- Page-specific CSS + JS-->
+    {% block head %}
+    {% endblock %}
+
+    <!-- Load Javascript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <h1>Ooops...something went wrong</h1>
+            <br>
+            <p>({{ error }})</p>
+            <br>
+        </div>
+    </section>
+</body>
+</html>

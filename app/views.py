@@ -4,8 +4,21 @@ from app.model import DatabaseHelper
 
 db = DatabaseHelper()
 
-@app.route('/')
-def root():
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	if request.method == 'POST':
+		email = request.form['email']
+		password = request.form['password']
+		try:
+			db.sign_in(email, password)
+			return redirect(url_for('main'))
+		except Exception as e:
+			return render_template("error.html", error = str(e))
+	return render_template("login.html")
+
+@app.route('/main')
+def main():
     return render_template('homepage.html', page_name="Projects")
 
 @app.route('/projects/<project_name>')
@@ -16,10 +29,17 @@ def project_management(project_name):
 def dashboard():
 	return render_template('dashboard.html', page_name="Analytics")
 
-@app.route('/login')
-def login():
-	return render_template('login.html', page_name="Login")
-
-@app.route('/newUser')
-def newUser():
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+	if request.method == 'POST':
+		first_name = request.form['first_name']
+		last_name = request.form['last_name']
+		email = request.form['email']
+		password = request.form['password']
+		try:
+			db.create_user(first_name, last_name, email, password)
+			db.sign_in(email, password)
+			return redirect(url_for('main')) 
+		except Exception as e:
+			return render_template("error.html", error = str(e))
 	return render_template('newUser.html', page_name="Create New User")
