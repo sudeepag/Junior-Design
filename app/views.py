@@ -1,12 +1,12 @@
 from flask import Flask, render_template
+from app import app
 
-app = Flask(__name__)
-app.config.update(TEMPLATES_AUTO_RELOAD=True)
+# app = Flask(__name__)
+# app.config.update(TEMPLATES_AUTO_RELOAD=True)
 
 @app.route('/')
 def root():
     return render_template('homepage.html', page_name="Projects")
-
 
 @app.route('/projects/<project_name>')
 def project_management(project_name):
