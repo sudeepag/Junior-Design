@@ -43,3 +43,7 @@ def register():
 		except Exception as e:
 			return render_template("error.html", error = str(e))
 	return render_template('newUser.html', page_name="Create New User")
+
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    return render_template('forgot_password.html', page_name="Forgot Password?")
