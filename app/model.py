@@ -1,4 +1,5 @@
 import pyrebase
+import datetime
 
 FIREBASE_CREDENTIALS = {
     'apiKey': "AIzaSyDpcs6rtT7S0e0W8u5tYrhHZWvaW7P_gUE",
@@ -35,6 +36,9 @@ class DatabaseHelper:
         data = {"first_name": first_name, "last_name": last_name, "email": email}
         self.db.child("users").child(db_user['localId']).set(data)
 
+    def create_project(self, name):
+        data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": datetime.now,
+                "last_updated": datetime.now, "words": 0}
 
 class User:
     def __init__(self, id, token, first_name, last_name, email):
@@ -50,13 +54,15 @@ class User:
 
 
 class Project:
-    def __init__(self, id, user_id, current_goal_id, last_updated, words):
+    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words):
         self.id = id
+        self.name = name
         self.user_id = user_id
         self.current_goal_id = current_goal_id
+        self.creation_date = creation_date
         self.last_updated = last_updated
         self.words = words
 
     def __repr__(self):
-        return 'id: {}\nuser_id: {}\ncurrent_goal_id: {}\nlast_updated: {}\nlast_updated: {}\nself.words: {}' \
-            .format(self.id, self.user_id, self.current_goal_id, self.last_updated, self.words)
+        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}' \
+            .format(self.id, self.name, self.user_id, self.current_goal_id, self.creation_date, self.last_updated, self.words)

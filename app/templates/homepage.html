@@ -40,7 +40,7 @@
 						<b>Last Updated: </b> {3}
 					</div>
 				</div>
-				 
+
 			</div>
 		</div>`;
 
@@ -69,79 +69,91 @@
 									currentTime.calendar());
 	            			$('.project-list>div:eq(0)').after(newProjectHtml);
 	            			//element.insertAdjacentHTML('beforeend', newGoalHtml)
+	            			$.ajax({
+								url: '/new_project',
+								data: $('addProjectForm').serialize(),
+								type: 'POST',
+								success: function(response){
+									console.log(response);
+								},
+								error: function(error){
+									console.log(error);
+								}
+							});
 	            		} else {
 	            			alert("Invalid goal.");
 	            		}
 	            	}
 	            }
-	    	});
+	    });
 	});
-
 
 </script>
 {% endblock scripts %}
 
 {% block content %}
-	<div class='mdl-grid project-list'>
-		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card">
-			<div class="project-circle project-add-circle">
-				<div class="project-circle-text">
-					+
+	<form method="POST">
+		<div class='mdl-grid project-list'>
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card">
+				<div class="project-circle project-add-circle">
+					<div class="project-circle-text">
+						+
+					</div>
+				</div>
+				<div class="mdl-cell project-card-description">
+					<div class="mdl-cell mdl-cell--10-col project-card-header">
+						Add Project
+						<hr>
+					</div>
 				</div>
 			</div>
-			<div class="mdl-cell project-card-description">
-				<div class="mdl-cell mdl-cell--10-col project-card-header">
-			    	Add Project
-					<hr>
-				</div>	
-			</div>
-		</div>
-		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
-			<div class="project-circle">
-				<div class="project-circle-text">
-					P
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
+				<div class="project-circle">
+					<div class="project-circle-text">
+						P
+					</div>
+				</div>
+
+				<div class="mdl-cell project-card-description" >
+					<div class="mdl-cell mdl-cell--12-col project-card-header">
+						Personal Journal of Short Stories
+						<hr>
+					</div>
+					<div class="mdl-cell mdl-cell--12-col">
+						<div class="mdl-cell--12-col">
+							<b>Current Goal: </b>Complete Under and Above short story
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Last Updated: </b> Nov. 5 at 4:14pm
+						</div>
+					</div>
+
 				</div>
 			</div>
 
-			<div class="mdl-cell project-card-description" >
-				<div class="mdl-cell mdl-cell--12-col project-card-header">
-					Personal Journal of Short Stories
-					<hr>
-				</div>
-				<div class="mdl-cell mdl-cell--12-col">
-					<div class="mdl-cell--12-col">
-						<b>Current Goal: </b>Complete Under and Above short story
-					</div>
-					<div class="mdl-cell--12-col">
-						<b>Last Updated: </b> Nov. 5 at 4:14pm
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="AE Research">
+				<div class="project-circle">
+					<div class="project-circle-text">
+						A
 					</div>
 				</div>
-				 
+
+				<div class="mdl-cell project-card-description">
+					<div class="mdl-cell mdl-cell--12-col project-card-header">
+						AE Research
+						<hr>
+					</div>
+					<div class="mdl-cell mdl-cell--12-col">
+						<div class="mdl-cell--12-col">
+							<b>Current Goal: </b>Complete executive summary v. 1.1
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Last Updated: </b> Nov. 4 at 8:19pm
+						</div>
+					</div>
+
+				</div>
 			</div>
 		</div>
-
-		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="AE Research">
-			<div class="project-circle">
-				<div class="project-circle-text">
-					A
-				</div>
-			</div>
-
-			<div class="mdl-cell project-card-description">
-				<div class="mdl-cell mdl-cell--12-col project-card-header">
-					AE Research
-					<hr>
-				</div>
-				<div class="mdl-cell mdl-cell--12-col">
-					<div class="mdl-cell--12-col">
-						<b>Current Goal: </b>Complete executive summary v. 1.1
-					</div>
-					<div class="mdl-cell--12-col">
-						<b>Last Updated: </b> Nov. 4 at 8:19pm
-					</div>
-				</div>
-				 
-			</div>
-		</div>
-	</div>
+	</form>
 {% endblock content %}
