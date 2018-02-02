@@ -39,6 +39,12 @@ class DatabaseHelper:
     def create_project(self, name):
         data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": datetime.now,
                 "last_updated": datetime.now, "words": 0}
+        self.db.child("users").child(self.user.id).child(name).set(data)
+        new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
+                              data["creation_date"], data["creation_date"], data["words"])
+        self.user.projects.append(new_project)
+        print('Successful creation of a new project!\n%s' % str(new_project))
+
 
 class User:
     def __init__(self, id, token, first_name, last_name, email):
@@ -47,6 +53,7 @@ class User:
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.projects = []
 
     def __repr__(self):
         return 'id: {}\ntoken: {}\nfirst_name: {}\nlast_name: {}\nemail: {}' \
