@@ -24,9 +24,10 @@ def main():
 @app.route('/new_project', methods=['POST'])
 def new_project():
     if request.method == 'POST':
-        project_name = request.json['project_name']
+        project_name = request.form['project_name']
         try:
             db.create_project(project_name)
+            return project_name
         except Exception as e:
             return render_template("error.html", error = str(e))
 

@@ -37,8 +37,9 @@ class DatabaseHelper:
         self.db.child("users").child(db_user['localId']).set(data)
 
     def create_project(self, name):
-        data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": datetime.now,
-                "last_updated": datetime.now, "words": 0}
+        time = str(datetime.datetime.now())
+        data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": time,
+                "last_updated": time, "words": 0}
         self.db.child("users").child(self.user.id).child(name).set(data)
         new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
                               data["creation_date"], data["creation_date"], data["words"])
