@@ -46,6 +46,16 @@ class DatabaseHelper:
         self.user.projects.append(new_project)
         print('Successful creation of a new project!\n%s' % str(new_project))
 
+    def create_goal(self, project_name, name):
+        time = str(datetime.datetime.now())
+        data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": time,
+            "last_updated": time, "words": 0, "completed": False}
+        self.db.child("users").child(self.user.id).child(self.user.id.projectName).child(name).set(data)
+        new_goal = Goal(len(self.user.projects), name, self.user.id, data["current_goal_id"],
+                            data["creation_date"], data["creation_date"], data["words"], data["completed"])
+        self.projects.goals.append(new_goal)
+        print('Successful creation of a new goal!\n%s' % str(new_goal))
+
 
 class User:
     def __init__(self, id, token, first_name, last_name, email):
@@ -70,7 +80,24 @@ class Project:
         self.creation_date = creation_date
         self.last_updated = last_updated
         self.words = words
+        self.goals = []
 
     def __repr__(self):
-        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}' \
-            .format(self.id, self.name, self.user_id, self.current_goal_id, self.creation_date, self.last_updated, self.words)
+        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.goals: {}' \
+            .format(self.id, self.name, self.user_id, self.current_goal_id, self.creation_date, self.last_updated, self.words, self.goals)
+
+class Goal:
+    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words, completed):
+        self.id = id
+        self.name = name
+        self.user_id = user_id
+        self.current_goal_id = current_goal_id
+        self.creation_date = creation_date
+        self.last_updated = last_updated
+        self.words = words
+        self.completed = completed
+
+    def __repr__(self):
+        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.completed: {}' \
+            .format(self.id, self.name, self.user_id, self.current_goal_id, 
+			self.creation_date, self.last_updated, self.words, self.completed)

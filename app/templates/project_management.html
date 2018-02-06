@@ -138,6 +138,17 @@
 	            			var element = document.getElementsByClassName('in-progress-goals')[0]
 	            			$('.in-progress-goals').prepend(newGoalHtml);
 	            			//element.insertAdjacentHTML('beforeend', newGoalHtml)
+							$.ajax({
+                                url: '/new_goal',
+                                data: {'project_name': page_name, 'goal_name': goal},
+                                type: 'POST',
+                                success: function(response){
+                                    console.log(response);
+                                },
+                                error: function(error){
+                                    console.log(error);
+                                }
+                            });
 	            		} else {
 	            			alert("Invalid goal.");
 	            		}
