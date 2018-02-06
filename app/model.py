@@ -39,10 +39,10 @@ class DatabaseHelper:
     def create_project(self, name):
         time = str(datetime.datetime.now())
         data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": time,
-                "last_updated": time, "words": 0}
+                "last_updated": time, "words": 0, "goals": 0}
         self.db.child("users").child(self.user.id).child(name).set(data)
         new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
-                              data["creation_date"], data["creation_date"], data["words"])
+                              data["creation_date"], data["creation_date"], data["words"], data["goals"])
         self.user.projects.append(new_project)
         print('Successful creation of a new project!\n%s' % str(new_project))
 
@@ -50,7 +50,8 @@ class DatabaseHelper:
         time = str(datetime.datetime.now())
         data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": time,
             "last_updated": time, "words": 0, "completed": False}
-        self.db.child("users").child(self.user.id).child(self.user.id.projectName).child(name).set(data)
+        self.db.child("users").child(self.user.id).child(project_name).child(name).set(data)
+        # self.db.child("goals").set(data)
         new_goal = Goal(len(self.user.projects), name, self.user.id, data["current_goal_id"],
                             data["creation_date"], data["creation_date"], data["words"], data["completed"])
         self.projects.goals.append(new_goal)

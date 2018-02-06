@@ -136,12 +136,15 @@
 									goal,
 									currentTime.calendar());
 	            			var element = document.getElementsByClassName('in-progress-goals')[0]
+							console.log('goal created')
+							// console.log(document.getElementsByClassName("mdl-layout-title").item(0).innerText)
 	            			$('.in-progress-goals').prepend(newGoalHtml);
 	            			//element.insertAdjacentHTML('beforeend', newGoalHtml)
 							$.ajax({
                                 url: '/new_goal',
-                                data: {'project_name': page_name, 'goal_name': goal},
+                                data: {'project_name': document.getElementsByClassName("mdl-layout-title").item(0).innerText, 'goal_name': goal},
                                 type: 'POST',
+								
                                 success: function(response){
                                     console.log(response);
                                 },
