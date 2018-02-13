@@ -6,6 +6,18 @@
 
 {% block scripts %}
 <script>
+
+    var FIREBASE_CREDENTIALS = {
+        'apiKey': "AIzaSyDpcs6rtT7S0e0W8u5tYrhHZWvaW7P_gUE",
+        'authDomain': "writers-bloc.firebaseapp.com",
+        'databaseURL': "https://writers-bloc.firebaseio.com",
+        'projectId': "writers-bloc",
+        'storageBucket': "writers-bloc.appspot.com",
+        'messagingSenderId': "59932670136",
+        'serviceAccount': 'app/writers-bloc-firebase-adminsdk-0pw3s-3084128171.json'
+    }
+    firebase = firebase.initializeApp(FIREBASE_CREDENTIALS)
+		
     $(document).on('click', '.project-card:not(".add-project-card")', function() {
         window.location.replace('/projects/' + $(this).attr('data-name'));
         console.log($(this).attr('data-name'));
@@ -88,6 +100,91 @@
         });
     });
 
+    var db = firebase.database();
+    var user = firebase.auth().currentUser;
+    console.log(user);
+    console.log(db.ref('users'));
+
+    // $.ajax({
+    //     url: 'http://writers-bloc.firebaseio.com/users',
+    //     type: 'GET',
+    //     success: function(response){
+    //         console.log(response);
+    //     },
+    //     error: function(error){
+    //         console.log(error);
+    //     }
+    // });
+
+
+    // var ref = new Firebase(DataLocation);
+    // ref.child('USERS').child(User_ID).on('value', function(snapshot) {
+    //     console.log(snapshot.val());
+    // });
+            
+    window.onload=function(){
+        var output = document.getElementById('output');
+        output.setAttribute("class","mdl-grid project-list");
+
+        var i=1;
+        var val="";
+        while(i<=3)
+        {
+    
+            if(!document.getElementById('timedrpact'+i))
+            {
+
+                // var projectList = document.createElement("div");
+                // projectList.setAttribute("class","mdl-grid project-list");
+
+                var ele = document.createElement("div");
+                ele.setAttribute("id","timedrpact"+i);
+                ele.setAttribute("class","mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card");
+                ele.setAttribute("data-name", "hi "+i);
+
+                var circleDiv = document.createElement("div");
+                circleDiv.setAttribute("class","project-circle")
+
+                var circleTextDiv = document.createElement("div");
+                circleTextDiv.setAttribute("class","project-circle-text")
+
+                circleDiv.appendChild(circleTextDiv);
+
+                var hr = document.createElement("HR");
+                var headerDiv = document.createElement("div");
+                headerDiv.setAttribute("class","mdl-cell mdl-cell--12-col project-card-header");
+                headerDiv.innerHTML="hi "+i;
+                headerDiv.appendChild(hr);
+
+                var descDiv = document.createElement("div");
+                descDiv.setAttribute("class","mdl-cell project-card-description");
+                descDiv.appendChild(headerDiv);
+
+                var bottomDiv = document.createElement("div");
+                bottomDiv.setAttribute("class","mdl-cell mdl-cell--12-col");
+
+                var goalDiv = document.createElement("div");
+                goalDiv.setAttribute("class","mdl-cell--12-col");
+                goalDiv.innerHTML="<b>Current Goal: </b>Complete Under and Above short story";
+
+                var updatedDiv = document.createElement("div");
+                updatedDiv.setAttribute("class","mdl-cell--12-col");
+                updatedDiv.innerHTML="<b>Last Updated: </b> Nov. 5 at 4:14pm";
+
+                bottomDiv.appendChild(goalDiv);
+                bottomDiv.appendChild(updatedDiv);
+                descDiv.appendChild(bottomDiv)
+
+                ele.appendChild(circleDiv);
+                ele.appendChild(descDiv);
+                output.appendChild(ele);
+    
+            }
+            i++;
+    
+    
+        }
+    };
 </script>
 {% endblock scripts %}
 
@@ -107,7 +204,10 @@
                     </div>
                 </div>
             </div>
-            <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
+            <div id="output" class="out">
+
+            </div>
+            <!-- <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
                 <div class="project-circle">
                     <div class="project-circle-text">
                         P
@@ -153,7 +253,8 @@
                     </div>
 
                 </div>
-            </div>
+            </div> -->
+
         </div>
     </form>
 {% endblock content %}
