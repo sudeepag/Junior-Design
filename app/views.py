@@ -19,7 +19,7 @@ def login():
 
 @app.route('/main')
 def main():
-    return render_template('homepage.html', page_name="Projects")
+    return render_template('homepage.html', page_name="Projects", firebase=db)
 
 @app.route('/new_project', methods=['POST'])
 def new_project():

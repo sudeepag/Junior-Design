@@ -16,7 +16,7 @@
         'messagingSenderId': "59932670136",
         'serviceAccount': 'app/writers-bloc-firebase-adminsdk-0pw3s-3084128171.json'
     }
-    firebase = firebase.initializeApp(FIREBASE_CREDENTIALS)
+    // firebase = firebase.initializeApp(FIREBASE_CREDENTIALS)
 		
     $(document).on('click', '.project-card:not(".add-project-card")', function() {
         window.location.replace('/projects/' + $(this).attr('data-name'));
@@ -100,10 +100,7 @@
         });
     });
 
-    var db = firebase.database();
-    var user = firebase.auth().currentUser;
-    console.log(user);
-    console.log(db.ref('users'));
+    console.log(document.getElementById('outergrid'));
 
     // $.ajax({
     //     url: 'http://writers-bloc.firebaseio.com/users',
@@ -123,9 +120,36 @@
     // });
             
     window.onload=function(){
+        var hr = document.createElement("HR");
         var output = document.getElementById('output');
         output.setAttribute("class","mdl-grid project-list");
 
+        // var newProject = document.createElement("div");
+        // newProject.setAttribute("class", "mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card");
+        
+        // var newProjectCircle = document.createElement("div");
+        // newProjectCircle.setAttribute("class", "project-circle project-add-circle");
+        // var newProjectCircleText = document.createElement("div");
+        // newProjectCircleText.setAttribute("class", "project-circle-text");
+        // newProjectCircleText.innerHTML = '+';
+        
+        // newProjectCircle.appendChild(newProjectCircleText);
+
+
+        // var newProjectDescription = document.createElement("div");
+        // newProjectDescription.setAttribute("class", "mdl-cell project-card-description");
+        
+        // var newProjectDescriptionText = document.createElement("div");
+        // newProjectDescriptionText.setAttribute("class", "mdl-cell mdl-cell--10-col project-card-header");
+        // newProjectDescriptionText.innerHTML = "Add Project";
+        // newProjectDescriptionText.appendChild(hr);
+        
+        // newProjectDescription.appendChild(newProjectDescriptionText);
+
+        // newProject.appendChild(newProjectCircle);
+        // newProject.appendChild(newProjectDescription);
+        
+        // output.appendChild(newProject);
         var i=1;
         var val="";
         while(i<=3)
@@ -133,9 +157,7 @@
     
             if(!document.getElementById('timedrpact'+i))
             {
-
-                // var projectList = document.createElement("div");
-                // projectList.setAttribute("class","mdl-grid project-list");
+                var hr = document.createElement("HR");
 
                 var ele = document.createElement("div");
                 ele.setAttribute("id","timedrpact"+i);
@@ -147,10 +169,9 @@
 
                 var circleTextDiv = document.createElement("div");
                 circleTextDiv.setAttribute("class","project-circle-text")
-
+                circleTextDiv.innerHTML='H';
                 circleDiv.appendChild(circleTextDiv);
 
-                var hr = document.createElement("HR");
                 var headerDiv = document.createElement("div");
                 headerDiv.setAttribute("class","mdl-cell mdl-cell--12-col project-card-header");
                 headerDiv.innerHTML="hi "+i;
@@ -178,19 +199,25 @@
                 ele.appendChild(circleDiv);
                 ele.appendChild(descDiv);
                 output.appendChild(ele);
-    
+                
             }
             i++;
     
     
         }
     };
+
+    db = {firebase}
+
+    console.log('db',db.firebase);
+
 </script>
 {% endblock scripts %}
 
 {% block content %}
+    
     <form method="POST">
-        <div class='mdl-grid project-list'>
+        <div id="outergrid" class='mdl-grid project-list'>
             <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card">
                 <div class="project-circle project-add-circle">
                     <div class="project-circle-text">
