@@ -56,6 +56,13 @@ class User:
         self.email = email
         self.projects = []
 
+        self.is_authenticated = True
+        self.is_active = True
+        self.is_anonymous = False
+
+    def get_id(self):
+        return self.id
+
     def __repr__(self):
         return 'id: {}\ntoken: {}\nfirst_name: {}\nlast_name: {}\nemail: {}' \
             .format(self.id, self.token, self.first_name, self.last_name, self.email)
