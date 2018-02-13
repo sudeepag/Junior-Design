@@ -1,8 +1,13 @@
 from flask import render_template, request, redirect, url_for, session
 from app import app
-from app.model import DatabaseHelper
+from app.model import DatabaseHelper, User
+from flask.ext.login import LoginManager, UserMixin, login_required, login_user, logout_user 
 
 db = DatabaseHelper()
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
@@ -12,16 +17,25 @@ def login():
         password = request.form['password']
         try:
             db.sign_in(email, password)
+            login_user(db.user)
             return redirect(url_for('main'))
         except Exception as e:
             return render_template("error.html", error = str(e))
     return render_template("login.html")
 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return render_template("login.html")
+
 @app.route('/main')
+@login_required
 def main():
     return render_template('homepage.html', page_name="Projects")
 
 @app.route('/new_project', methods=['POST'])
+@login_required
 def new_project():
     if request.method == 'POST':
         project_name = request.form['project_name']
@@ -43,10 +57,12 @@ def new_goal():
 			return render_template("error.html", error = str(e))
 
 @app.route('/projects/<project_name>')
+@login_required
 def project_management(project_name):
     return render_template('project_management.html', page_name=project_name)
 
 @app.route('/analytics')
+@login_required
 def dashboard():
     return render_template('dashboard.html', page_name="Analytics")
 
@@ -63,8 +79,16 @@ def register():
             return redirect(url_for('main'))
         except Exception as e:
             return render_template("error.html", error = str(e))
-    return render_template('newUser.html', page_name="Create New User")
+    return render_template('register.html', page_name="Create New User")
 
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     return render_template('forgot_password.html', page_name="Forgot Password?")
+
+# callback to reload the user object        
+@login_manager.user_loader
+def load_user(userid):
+    try:
+        return db.user
+    except:
+        return None

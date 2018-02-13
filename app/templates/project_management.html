@@ -1,17 +1,17 @@
 {% extends 'dashboard.html' %}
 
 {% block page_name %}
-	{{page_name}}
+{{page_name}}
 {% endblock page_name %}
 
 {% block scripts %}
-	<script>
+<script>
 		$(document).on('keyup keypress', 'form input[type="text"]', function(e) {
 		  if(e.which == 13) {
 		    e.preventDefault();
 		    return false;
 		  }
-		});	
+		});
 		var addGoalForm = `
 			<form action="#" class="modal-form">
 				<div class="mdl-textfield mdl-js-textfield">
@@ -28,7 +28,6 @@
 				</div>
 			</form>
 		`;
-
 		var workHistory = `
 			<ul class="demo-list-control mdl-list">
 			  <li class="mdl-list__item">
@@ -45,7 +44,6 @@
 				        class="mdl-button mdl-js-button mdl-button--icon">
 				  <i class="material-icons">more_vert</i>
 				</button>
-
 				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
 				    for="workHistoryItem1">
 				  <li class="mdl-menu__item mdl-color-text--red">Delete</li>
@@ -65,7 +63,6 @@
 				        class="mdl-button mdl-js-button mdl-button--icon">
 				  <i class="material-icons">more_vert</i>
 				</button>
-
 				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
 				    for="workHistoryItem2">
 				  <li class="mdl-menu__item mdl-color-text--red">Delete</li>
@@ -73,7 +70,6 @@
 			  </li>
 			</ul>
 		`;
-
 		var completedGoalButton = `
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
 	  			Revert
@@ -87,7 +83,6 @@
 	  			Complete
 			</button>
 		`;
-
 		var newGoalFormat = `
 			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" data-total=0 data-updated="{1}">
 				<div class="goal-action">
@@ -115,9 +110,8 @@
 		  				Contribution History
 					</button>
 				</div>
-			</div>	
+			</div>
 		`;
-
 		$('#add-goal-button').click(function() {
 			showDialog({
 		        text: addGoalForm,
@@ -159,7 +153,6 @@
 	            }
 	        });
 		});
-
         $(document).on('click', '.add-work-button', function() {
 			var card = $(this).closest('.goal-card');
 			showDialog({
@@ -184,7 +177,6 @@
 	            }
 	        });
 		});
-
         $(document).on('click', '.goal-history', function() {
 			showDialog({
 				title: 'Goal Progress History',
@@ -194,27 +186,22 @@
 	            }
 	        });
 		});
-
 		$(document).on('click', '.complete-goal-button', function() {
 			var card = $(this).closest('.goal-card');
 			card.prependTo('.completed-goals');
-
 			// Clears the buttons sections and updates it with the revert button
 			var buttonSection = card.find('.goal-action');
 			buttonSection.empty()
 			buttonSection.html(completedGoalButton)
 		});
-
 		$(document).on('click', '.revert-button', function() {
 			var card = $(this).closest('.goal-card');
 			card.prependTo('.in-progress-goals');
-
 			// Clears the buttons sections and updates it with the add work/complete buttons
 			var buttonSection = card.find('.goal-action');
 			buttonSection.empty()
 			buttonSection.html(inProgressButtons)
 		});
-
 		function addGoalForm() {
 			alert("FOOBAR");
 			return true;
@@ -227,7 +214,7 @@
 	<div class="mdl-mdl-cell--12-col content-header">
 		Goals in progress
 		<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--mini-fab mdl-button--colored" id="add-goal-button">
-		  <i class="material-icons">add</i>
+			<i class="material-icons">add</i>
 		</button>
 		<hr>
 	</div>
@@ -235,10 +222,10 @@
 		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="Complete Under and Above short story" data-total=450 data-updated="March 25 2015 09:56:24">
 			<div class="goal-action">
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
-		  			Add work
+					Add work
 				</button>
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect complete-goal-button">
-		  			Complete
+					Complete
 				</button>
 			</div>
 			<div class="mdl-cell goal-card-description">
@@ -255,7 +242,7 @@
 					</div>
 				</div>
 				<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-	  				Contribution History
+					Contribution History
 				</button>
 			</div>
 		</div>
@@ -269,7 +256,7 @@
 		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
 			<div class="goal-action">
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
-		  			Revert
+					Revert
 				</button>
 			</div>
 
@@ -287,8 +274,8 @@
 						<b>Completd on: </b><div class='last-updated'>Nov. 4 at 3:14pm</div>
 					</div>
 				</div>
-	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-	  				Contribution History
+				<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+					Contribution History
 				</button>
 			</div>
 		</div>
@@ -296,7 +283,7 @@
 		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
 			<div class="goal-action">
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
-		  			Revert
+					Revert
 				</button>
 			</div>
 
@@ -314,8 +301,8 @@
 						<b>Completd on: </b><div class='last-updated'>Oct 23 at 9:14pm</div>
 					</div>
 				</div>
-	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-	  				Contribution History
+				<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+					Contribution History
 				</button>
 			</div>
 		</div>
@@ -323,7 +310,7 @@
 		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card">
 			<div class="goal-action">
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
-		  			Revert
+					Revert
 				</button>
 			</div>
 
@@ -341,8 +328,8 @@
 						<b>Completd on: </b><div class='last-updated'>Oct 21 at 1:14pm</div>
 					</div>
 				</div>
-	 			<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
-	  				Contribution History
+				<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
+					Contribution History
 				</button>
 			</div>
 		</div>
@@ -359,13 +346,13 @@
 				<span class="mdl-list__item-primary-content">
 				  <b>Creation Date: </b>Oct 21
 				</span>
-				</li>
-				<li class="mdl-list__item">
+			</li>
+			<li class="mdl-list__item">
 				<span class="mdl-list__item-primary-content">
 				  <b>Number of Contributions: </b>6
 				</span>
-				</li>
-				<li class="mdl-list__item">
+			</li>
+			<li class="mdl-list__item">
 				<span class="mdl-list__item-primary-content">
 				  <b>Total Words Added: </b>1605
 				</span>
@@ -373,7 +360,7 @@
 		</ul>
 		<div class="mdl-grid mdl-grid mdl-cell--12-col">
 			<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored analytics-button" href="/analytics">
-	  			<div class="material-icons">show_chart</div> View Analytics
+				<div class="material-icons">show_chart</div> View Analytics
 			</a>
 		</div>
 	</div>
