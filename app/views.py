@@ -77,4 +77,7 @@ def forgot():
 # callback to reload the user object        
 @login_manager.user_loader
 def load_user(userid):
-    return db.user
+    try:
+        return db.user
+    except:
+        return None
