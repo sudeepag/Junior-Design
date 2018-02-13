@@ -52,7 +52,7 @@ def register():
             return redirect(url_for('main'))
         except Exception as e:
             return render_template("error.html", error = str(e))
-    return render_template('newUser.html', page_name="Create New User")
+    return render_template('register.html', page_name="Create New User")
 
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
