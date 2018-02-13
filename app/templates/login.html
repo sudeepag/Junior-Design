@@ -1,32 +1,31 @@
-
 <!doctype html>
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Writer's Bloc Login</title>
-  <link rel="stylesheet" href="/static/css/templates/login.css">
+    <meta charset="utf-8">
+    <title>Writer's Bloc Login</title>
+    <link rel="stylesheet" href="/static/css/templates/login.css">
 </head>
 
 <body>
 
-  <script>
+<script>
       $('.message a').click(function() {
           $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
       });
   </script>
 
-  <div class="login-page">
+<div class="login-page">
     <img src='/static/images/logo.png' style="margin-top:4em; margin-bottom:4em;">
     <div class="form">
-      <form class="login-form" method="POST">
-        <input type="text" placeholder="email" name="email"/>
-        <input type="password" placeholder="password" name="password"/>
-        <button>login</button>
-        <p class="message">Not registered? <a href="/register">Create an account</a></p>
-      </form>
+        <form class="login-form" method="POST">
+            <input type="text" placeholder="email" name="email"/>
+            <input type="password" placeholder="password" name="password"/>
+            <button>login</button>
+            <p class="message">Not registered? <a href="/register">Create an account</a></p>
+        </form>
     </div>
-  </div>
+</div>
 
 </body>
 </html>
