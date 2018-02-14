@@ -57,6 +57,14 @@ class DatabaseHelper:
         self.projects.goals.append(new_goal)
         print('Successful creation of a new goal!\n%s' % str(new_goal))
 
+    def complete_goal(self, project_name, name):
+        self.db.child("users").child(self.user.id).child(project_name).child(name).child("completed").set(True)
+        print('Successful completion of a goal!\n%s' % str(new_goal))
+    
+    def revert_goal(self, project_name, name):
+        self.db.child("users").child(self.user.id).child(project_name).child(name).child("completed").set(False)
+        print('Successful reverted a goal!\n%s' % str(new_goal))
+
 
 class User:
     def __init__(self, id, token, first_name, last_name, email):
