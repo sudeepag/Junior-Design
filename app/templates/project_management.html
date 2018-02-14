@@ -121,7 +121,8 @@
 		        positive: {
 	            	title: 'Add Goal',
 	            	onClick: function (e) {
-	            		var goal = $("#goal").val();
+						var goal = $("#goal").val();
+						console.log(goal);
 	            		if (goal) {
 	            			var currentTime = moment();
 	            			var newGoalHtml =  newGoalFormat.format(
@@ -130,8 +131,22 @@
 									goal,
 									currentTime.calendar());
 	            			var element = document.getElementsByClassName('in-progress-goals')[0]
+							console.log('goal created')
+							// console.log(document.getElementsByClassName("mdl-layout-title").item(0).innerText)
 	            			$('.in-progress-goals').prepend(newGoalHtml);
 	            			//element.insertAdjacentHTML('beforeend', newGoalHtml)
+							$.ajax({
+                                url: '/new_goal',
+                                data: {'project_name': document.getElementsByClassName("mdl-layout-title").item(0).innerText, 'goal_name': goal},
+                                type: 'POST',
+								
+                                success: function(response){
+                                    console.log();
+                                },
+                                error: function(error){
+                                    console.log(error);
+                                }
+                            });
 	            		} else {
 	            			alert("Invalid goal.");
 	            		}
@@ -174,6 +189,21 @@
 		});
 		$(document).on('click', '.complete-goal-button', function() {
 			var card = $(this).closest('.goal-card');
+			var goal = card[0].dataset.name;
+			console.log('card',card);
+			console.log('name',goal);
+			$.ajax({
+				url: '/complete_goal',
+				data: {'project_name': document.getElementsByClassName("mdl-layout-title").item(0).innerText, 'goal_name': goal},
+				type: 'POST',
+				
+				success: function(response){
+					console.log();
+				},
+				error: function(error){
+					console.log(error);
+				}
+			});
 			card.prependTo('.completed-goals');
 			// Clears the buttons sections and updates it with the revert button
 			var buttonSection = card.find('.goal-action');
@@ -183,6 +213,21 @@
 		$(document).on('click', '.revert-button', function() {
 			var card = $(this).closest('.goal-card');
 			card.prependTo('.in-progress-goals');
+			var goal = card[0].dataset.name;
+			console.log('card',card);
+			console.log('name',goal);
+			$.ajax({
+				url: '/revert_goal',
+				data: {'project_name': document.getElementsByClassName("mdl-layout-title").item(0).innerText, 'goal_name': goal},
+				type: 'POST',
+				
+				success: function(response){
+					console.log();
+				},
+				error: function(error){
+					console.log(error);
+				}
+			});
 			// Clears the buttons sections and updates it with the add work/complete buttons
 			var buttonSection = card.find('.goal-action');
 			buttonSection.empty()
