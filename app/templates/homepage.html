@@ -13,7 +13,6 @@
 <script src="/__/firebase/init.js"></script>
 
 <script>
-
 	// html template for new project after being created
 	var newProjectFormat = `
         <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="{0}">
@@ -43,38 +42,6 @@
         return false;
       }
     });
-
-	// initialize firebase app
-	var config = {
-	apiKey: "AIzaSyDpcs6rtT7S0e0W8u5tYrhHZWvaW7P_gUE",
-	authDomain: "writers-bloc.firebaseapp.com",
-	databaseURL: "https://writers-bloc.firebaseio.com",
-	projectId: "writers-bloc",
-	};
-	firebase.initializeApp(config);
-
-	// Get user and all of their projects
-	var user = firebase.auth().currentUser;
-	if (user) {
-		var projectsRef = firebase.database().ref('users/' + user).child('/projects').orderByKey();
-
-		// traverse through user projects and render HTML cards
-		query.once('value').then(function(snapshot) {
-			snapshot.forEach(function(childSnapshot) {
-			var key = childSnapshot.key;
-			var projectData = childSnapshot.val();
-
-			var newProjectHtml =  newProjectFormat.format(
-				projectData.name,
-				projectData.name.substring(0, 1),
-				projectData.name,
-				projectData.creation_date);
-			$('.project-list>div:eq(0)').after(newProjectHtml);
-			});
-		});
-	} else {
-		console.log("Invalid user");
-	}
 
 	// js form to create new project
     $(document).on('click', '.project-card:not(".add-project-card")', function() {
@@ -142,6 +109,7 @@
 {% endblock scripts %}
 
 {% block content %}
+
 <form method="POST">
 	<div class='mdl-grid project-list'>
 		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card">
@@ -157,13 +125,93 @@
 				</div>
 			</div>
 		</div>
+
+	<!--<script>-->
+		<!--// initialize firebase app-->
+		<!--var config = {-->
+			<!--apiKey: "AIzaSyDpcs6rtT7S0e0W8u5tYrhHZWvaW7P_gUE",-->
+			<!--authDomain: "writers-bloc.firebaseapp.com",-->
+			<!--databaseURL: "https://writers-bloc.firebaseio.com",-->
+			<!--projectId: "writers-bloc",-->
+		<!--};-->
+		<!--firebase.initializeApp(config);-->
+
+		<!--// Get user and all of their projects-->
+		<!--var user = firebase.auth().currentUser;-->
+		<!--if (user) {-->
+			<!--var projectsRef = firebase.database().ref('users/' + user).child('/projects').orderByKey();-->
+
+			<!--// traverse through user projects and render HTML cards-->
+			<!--query.once('value').then(function(snapshot) {-->
+				<!--snapshot.forEach(function(childSnapshot) {-->
+				<!--var key = childSnapshot.key;-->
+				<!--var projectData = childSnapshot.val();-->
+				<!--$ document.write(-->
+					<!--'<div class="mdl-color&#45;&#45;white mdl-shadow&#45;&#45;2dp mdl-cell mdl-cell&#45;&#45;6-col mdl-grid mdl-grid mdl-cell&#45;&#45;6-col project-card" data-name="Personal Journal of Short Stories">-->
+						<!--<div class="project-circle">-->
+							<!--<div class="project-circle-text">-->
+								<!--projectData.name.substring(0,1)-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="mdl-cell project-card-description" >-->
+							<!--<div class="mdl-cell mdl-cell&#45;&#45;12-col project-card-header">-->
+								<!--projectData.name-->
+								<!--<hr>-->
+							<!--</div>-->
+							<!--<div class="mdl-cell mdl-cell&#45;&#45;12-col">-->
+								<!--<div class="mdl-cell&#45;&#45;12-col">-->
+									<!--<b>Current Goal: </b> projectData.current_goal-->
+								<!--</div>-->
+								<!--<div class="mdl-cell&#45;&#45;12-col">-->
+									<!--<b>Last Updated: </b> projectData.creation_date-->
+								<!--</div>-->
+							<!--</div>-->
+
+						<!--</div>-->
+					<!--</div>'-->
+				<!--);-->
+			<!--});-->
+		<!--} else {-->
+			<!--console.log("Invalid user");-->
+		<!--}-->
+	<!--}-->
+
+	<!--</script>-->
+
+		<script>
+			for (int i = 0; i < 2; i++) {
+				$document.write(
+					'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
+						<div class="project-circle">
+							<div class="project-circle-text">
+								P
+							</div>
+						</div>
+						<div class="mdl-cell project-card-description" >
+							<div class="mdl-cell mdl-cell--12-col project-card-header">
+								Personal Journal of Short Stories
+								<hr>
+							</div>
+							<div class="mdl-cell mdl-cell--12-col">
+								<div class="mdl-cell--12-col">
+									<b>Current Goal: </b>Complete Under and Above short story
+								</div>
+								<div class="mdl-cell--12-col">
+									<b>Last Updated: </b> Nov. 5 at 4:14pm
+								</div>
+							</div>
+						</div>
+					</div>'
+				);
+			}
+		</script>
+
 		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
 			<div class="project-circle">
 				<div class="project-circle-text">
 					P
 				</div>
 			</div>
-
 			<div class="mdl-cell project-card-description" >
 				<div class="mdl-cell mdl-cell--12-col project-card-header">
 					Personal Journal of Short Stories
