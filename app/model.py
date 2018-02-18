@@ -34,9 +34,10 @@ class DatabaseHelper:
 
     def fetch_projects(self):
         res = self.db.child('users').child(self.user.id).child('projects').get().val()
-        for k in res.keys():
-            o = res[k]
-            self.user.projects.append(o)
+        if res:
+            for k in res.keys():
+                o = res[k]
+                self.user.projects.append(o)
             # Project(None, o['name'], o['user_id'], o['current_goal_id'], o['creation_date'], o['last_updated'], o['words'])
         # print(self.user.projects)
 
@@ -51,9 +52,9 @@ class DatabaseHelper:
         data = {"id": id, "user_id": self.user.id, "name": name, "current_goal_id": "None",
                 "creation_date": time, "last_updated": time, "words": 0, "goals": 0}
         self.db.child("users").child(self.user.id).child("projects").child(id).set(data)
-        new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
-                              data["creation_date"], data["creation_date"], data["words"], data["goals"])
-        self.user.projects.append(new_project)
+        # new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
+        #                       data["creation_date"], data["creation_date"], data["words"], data["goals"])
+        self.user.projects.append(data)
         print('Successful creation of a new project!\n%s' % str(new_project))
 
     def create_goal(self, project_name, name):

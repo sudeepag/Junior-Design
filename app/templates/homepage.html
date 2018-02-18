@@ -8,28 +8,6 @@
 <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 
 <script>
-		// // initialize firebase app
-		// var config = {
-		// 	apiKey: "AIzaSyDpcs6rtT7S0e0W8u5tYrhHZWvaW7P_gUE",
-		// 	authDomain: "writers-bloc.firebaseapp.com",
-		// 	databaseURL: "https://writers-bloc.firebaseio.com",
-		// 	projectId: "writers-bloc",
-		// };
-		// firebase.initializeApp(config);
-
-		// var user = "{{user_id}}";
-		// var projectsRef = firebase.database().ref('users/' + user).child('/projects');
-		// var projectsQuery = projectsRef.orderByKey();
-		// // TODO: get user_id from firebase https://firebase.google.com/docs/auth/web/manage-users
-
-		// // traverse through user projects and render HTML cards
-		// projectsQuery.once('value').then(function(snapshot) {
-		// 	snapshot.forEach(function(childSnapshot) {
-		// 		var key = childSnapshot.key;
-		// 		var projectData = childSnapshot.val();
-		// 		createCards(projectData, key);
-		// 	});
-		// });
 
 		{% for p in projects %}
 		    createCards('{{p.name}}', '{{p.current_goal_id}}', '{{p.creation_date}}')
