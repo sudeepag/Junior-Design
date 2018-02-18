@@ -27,9 +27,18 @@ class DatabaseHelper:
             self.user = User(auth_user['localId'], auth_user['idToken'], db_user.val()['first_name'],
                              db_user.val()['last_name'], db_user.val()['email'])
             print('Successful login!\n%s' % str(self.user))
+        self.fetch_projects()
 
     def sign_out(self):
         self.user = None
+
+    def fetch_projects(self):
+        res = self.db.child('users').child(self.user.id).child('projects').get().val()
+        for k in res.keys():
+            o = res[k]
+            self.user.projects.append(o)
+            # Project(None, o['name'], o['user_id'], o['current_goal_id'], o['creation_date'], o['last_updated'], o['words'])
+        # print(self.user.projects)
 
     def create_user(self, first_name, last_name, email, password):
         db_user = self.auth.create_user_with_email_and_password(email, password)
