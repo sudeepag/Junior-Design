@@ -50,7 +50,8 @@ class DatabaseHelper:
         time = str(datetime.datetime.now())
         data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": time,
             "last_updated": time, "words": 0, "completed": False}
-        self.db.child("users").child(self.user.id).child(project_name).child(name).set(data)
+        self.db.child("users").child(self.user.id).child("projects").child(project_name).child("goals").child(name)\
+            .set(data)
         # self.db.child("goals").set(data)
         new_goal = Goal(len(self.user.projects), name, self.user.id, data["current_goal_id"],
                             data["creation_date"], data["creation_date"], data["words"], data["completed"])
@@ -58,11 +59,13 @@ class DatabaseHelper:
         print('Successful creation of a new goal!\n%s' % str(new_goal))
 
     def complete_goal(self, project_name, name):
-        self.db.child("users").child(self.user.id).child(project_name).child(name).child("completed").set(True)
+        self.db.child("users").child(self.user.id).child("projects").child(project_name).child("goals").child(name)\
+            .child("completed").set(True)
         print('Successful completion of a goal!\n%s' % str(new_goal))
     
     def revert_goal(self, project_name, name):
-        self.db.child("users").child(self.user.id).child(project_name).child(name).child("completed").set(False)
+        self.db.child("users").child(self.user.id).child(project_name).child("goals").child(name).child("completed")\
+            .set(False)
         print('Successful reverted a goal!\n%s' % str(new_goal))
 
 

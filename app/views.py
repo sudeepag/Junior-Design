@@ -32,7 +32,7 @@ def logout():
 @app.route('/main')
 @login_required
 def main():
-    return render_template('homepage.html', page_name="Projects")
+    return render_template('homepage.html', page_name="Projects", user_id=str(db.user.id))
 
 @app.route('/new_project', methods=['POST'])
 @login_required
@@ -47,36 +47,36 @@ def new_project():
 
 @app.route('/new_goal', methods=['POST'])
 def new_goal():
-	if request.method == 'POST':
-		project_name = request.form['project_name']
-		goal_name = request.form['goal_name']
-		try:
-			db.create_goal(project_name, goal_name)
-			return goal_name
-		except Exception as e:
-			return render_template("error.html", error = str(e))
+    if request.method == 'POST':
+        project_name = request.form['project_name']
+        goal_name = request.form['goal_name']
+        try:
+            db.create_goal(project_name, goal_name)
+            return goal_name
+        except Exception as e:
+            return render_template("error.html", error = str(e))
 
 @app.route('/complete_goal', methods=['POST'])
 def complete_goal():
-	if request.method == 'POST':
-		project_name = request.form['project_name']
-		goal_name = request.form['goal_name']
-		try:
-			db.complete_goal(project_name, goal_name)
-			return goal_name
-		except Exception as e:
-			return render_template("error.html", error = str(e))
+    if request.method == 'POST':
+        project_name = request.form['project_name']
+        goal_name = request.form['goal_name']
+        try:
+            db.complete_goal(project_name, goal_name)
+            return goal_name
+        except Exception as e:
+            return render_template("error.html", error = str(e))
 
 @app.route('/revert_goal', methods=['POST'])
 def revert_goal():
-	if request.method == 'POST':
-		project_name = request.form['project_name']
-		goal_name = request.form['goal_name']
-		try:
-			db.revert_goal(project_name, goal_name)
-			return goal_name
-		except Exception as e:
-			return render_template("error.html", error = str(e))
+    if request.method == 'POST':
+        project_name = request.form['project_name']
+        goal_name = request.form['goal_name']
+        try:
+            db.revert_goal(project_name, goal_name)
+            return goal_name
+        except Exception as e:
+            return render_template("error.html", error = str(e))
 
 @app.route('/projects/<project_name>')
 @login_required
