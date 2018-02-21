@@ -35,11 +35,14 @@ class DatabaseHelper:
     def fetch_projects(self):
         res = self.db.child('users').child(self.user.id).child('projects').get().val()
         if res:
-            for k in res.keys():
-                o = res[k]
-                self.user.projects.append(o)
-            # Project(None, o['name'], o['user_id'], o['current_goal_id'], o['creation_date'], o['last_updated'], o['words'])
-        # print(self.user.projects)
+            if type(res) == dict:
+                res = [res]
+            for r in res:
+                self.user.projects.append(r)
+                # for k in r.keys():
+                #     o = r[k]
+                #     self.user.projects.append(o)
+            print(self.user.projects)
 
     def create_user(self, first_name, last_name, email, password):
         db_user = self.auth.create_user_with_email_and_password(email, password)
