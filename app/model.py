@@ -39,9 +39,6 @@ class DatabaseHelper:
                 res = [res]
             for r in res:
                 self.user.projects.append(r)
-                # for k in r.keys():
-                #     o = r[k]
-                #     self.user.projects.append(o)
             print(self.user.projects)
 
     def create_user(self, first_name, last_name, email, password):
