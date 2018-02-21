@@ -1,10 +1,46 @@
 {% extends 'dashboard.html' %}
 
 {% block page_name %}
-    {{page_name}}
+{{page_name}}
 {% endblock page_name %}
 
 {% block scripts %}
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+
+<script>
+
+		{% for p in projects %}
+		    createCards('{{p.name}}', '{{p.current_goal_id}}', '{{p.creation_date}}')
+		{% endfor %}
+
+		function createCards(name, current_goal_id, creation_date) {
+			document.getElementById("projectList").innerHTML += (
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name=' + name + '> \
+					<div class="project-circle"> \
+						<div class="project-circle-text"> ' +
+							name.substring(0,1) +
+						'</div> \
+					</div> \
+					<div class="mdl-cell project-card-description" > \
+						<div class="mdl-cell mdl-cell--12-col project-card-header">' +
+							name +
+							'<hr> \
+						</div> \
+						<div class="mdl-cell mdl-cell--12-col"> \
+							<div class="mdl-cell--12-col"> \
+								<b>Current Goal: </b>' + current_goal_id +
+							'</div> \
+							<div class="mdl-cell--12-col"> \
+								<b>Last Updated: </b>' + creation_date +
+							'</div> \
+						</div> \
+					</div> \
+				</div>'
+			);
+		}
+
+</script>
+
 <script>
 
     var FIREBASE_CREDENTIALS = {
@@ -22,7 +58,6 @@
         window.location.replace('/projects/' + $(this).attr('data-name'));
         console.log($(this).attr('data-name'));
     });
-
     var addProjectForm = `
         <form action="#" class="modal-form">
             <div class="mdl-textfield mdl-js-textfield">
@@ -30,7 +65,6 @@
                 <label class="mdl-textfield__label" for="project">Project</label>
             </div>
         </form>`;
-
     var newProjectFormat = `
         <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="{0}">
             <div class="project-circle">
@@ -38,7 +72,6 @@
                       {1}
                 </div>
             </div>
-
             <div class="mdl-cell project-card-description" >
                 <div class="mdl-cell mdl-cell--12-col project-card-header">
                     {2}
@@ -52,236 +85,73 @@
                         <b>Last Updated: </b> {3}
                     </div>
                 </div>
-
             </div>
         </div>`;
-
     $(document).on('keyup keypress', 'form input[type="text"]', function(e) {
       if(e.which == 13) {
-        e.preventDefault();
+        e.defaultPrevented();
         return false;
       }
     });
     $('.add-project-card').click(function() {
         showDialog({
-                text: addProjectForm,
-                negative: {
-                    title: 'Cancel'
-                },
-                positive: {
-                    title: 'Add Project',
-                    onClick: function (e) {
-                        var project = $("#project").val();
-                        if (project) {
-                            var currentTime = moment();
-                            var newProjectHtml =  newProjectFormat.format(
-                                    project,
-                                    project.substring(0, 1),
-                                    project,
-                                    currentTime.calendar());
-                            $('.project-list>div:eq(0)').after(newProjectHtml);
-                            //element.insertAdjacentHTML('beforeend', newGoalHtml)
-                            $.ajax({
-                                url: '/new_project',
-                                data: {'project_name': project},
-                                type: 'POST',
-                                success: function(response){
-                                    console.log(response);
-                                },
-                                error: function(error){
-                                    console.log(error);
-                                }
-                            });
-                        } else {
-                            alert("Invalid project.");
-                        }
-                    }
-                }
+			text: addProjectForm,
+			negative: {
+				title: 'Cancel'
+			},
+			positive: {
+				title: 'Add Project',
+				onClick: function (e) {
+					var project = $("#project").val();
+					if (project) {
+						var currentTime = moment();
+						var newProjectHtml =  newProjectFormat.format(
+								project,
+								project.substring(0, 1),
+								project,
+								currentTime.calendar());
+						$('.project-list>div:eq(0)').after(newProjectHtml);
+						//element.insertAdjacentHTML('beforeend', newGoalHtml)
+						$.ajax({
+							url: '/new_project',
+							data: {'project_name': project},
+							type: 'POST',
+							success: function(response){
+								console.log(response);
+							},
+							error: function(error){
+								console.log(error);
+							}
+						});
+					} else {
+						alert("Invalid project.");
+					}
+				}
+			}
         });
     });
-
-    console.log(document.getElementById('outergrid'));
-
-    // $.ajax({
-    //     url: 'http://writers-bloc.firebaseio.com/users',
-    //     type: 'GET',
-    //     success: function(response){
-    //         console.log(response);
-    //     },
-    //     error: function(error){
-    //         console.log(error);
-    //     }
-    // });
-
-
-    // var ref = new Firebase(DataLocation);
-    // ref.child('USERS').child(User_ID).on('value', function(snapshot) {
-    //     console.log(snapshot.val());
-    // });
-            
-    window.onload=function(){
-        var hr = document.createElement("HR");
-        var output = document.getElementById('output');
-        output.setAttribute("class","mdl-grid project-list");
-
-        // var newProject = document.createElement("div");
-        // newProject.setAttribute("class", "mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card");
-        
-        // var newProjectCircle = document.createElement("div");
-        // newProjectCircle.setAttribute("class", "project-circle project-add-circle");
-        // var newProjectCircleText = document.createElement("div");
-        // newProjectCircleText.setAttribute("class", "project-circle-text");
-        // newProjectCircleText.innerHTML = '+';
-        
-        // newProjectCircle.appendChild(newProjectCircleText);
-
-
-        // var newProjectDescription = document.createElement("div");
-        // newProjectDescription.setAttribute("class", "mdl-cell project-card-description");
-        
-        // var newProjectDescriptionText = document.createElement("div");
-        // newProjectDescriptionText.setAttribute("class", "mdl-cell mdl-cell--10-col project-card-header");
-        // newProjectDescriptionText.innerHTML = "Add Project";
-        // newProjectDescriptionText.appendChild(hr);
-        
-        // newProjectDescription.appendChild(newProjectDescriptionText);
-
-        // newProject.appendChild(newProjectCircle);
-        // newProject.appendChild(newProjectDescription);
-        
-        // output.appendChild(newProject);
-        var i=1;
-        var val="";
-        while(i<=3)
-        {
-    
-            if(!document.getElementById('timedrpact'+i))
-            {
-                var hr = document.createElement("HR");
-
-                var ele = document.createElement("div");
-                ele.setAttribute("id","timedrpact"+i);
-                ele.setAttribute("class","mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card");
-                ele.setAttribute("data-name", "hi "+i);
-
-                var circleDiv = document.createElement("div");
-                circleDiv.setAttribute("class","project-circle")
-
-                var circleTextDiv = document.createElement("div");
-                circleTextDiv.setAttribute("class","project-circle-text")
-                circleTextDiv.innerHTML='H';
-                circleDiv.appendChild(circleTextDiv);
-
-                var headerDiv = document.createElement("div");
-                headerDiv.setAttribute("class","mdl-cell mdl-cell--12-col project-card-header");
-                headerDiv.innerHTML="hi "+i;
-                headerDiv.appendChild(hr);
-
-                var descDiv = document.createElement("div");
-                descDiv.setAttribute("class","mdl-cell project-card-description");
-                descDiv.appendChild(headerDiv);
-
-                var bottomDiv = document.createElement("div");
-                bottomDiv.setAttribute("class","mdl-cell mdl-cell--12-col");
-
-                var goalDiv = document.createElement("div");
-                goalDiv.setAttribute("class","mdl-cell--12-col");
-                goalDiv.innerHTML="<b>Current Goal: </b>Complete Under and Above short story";
-
-                var updatedDiv = document.createElement("div");
-                updatedDiv.setAttribute("class","mdl-cell--12-col");
-                updatedDiv.innerHTML="<b>Last Updated: </b> Nov. 5 at 4:14pm";
-
-                bottomDiv.appendChild(goalDiv);
-                bottomDiv.appendChild(updatedDiv);
-                descDiv.appendChild(bottomDiv)
-
-                ele.appendChild(circleDiv);
-                ele.appendChild(descDiv);
-                output.appendChild(ele);
-                
-            }
-            i++;
-    
-    
-        }
-    };
-
-    db = {firebase}
-
-    console.log('db',db.firebase);
-
 </script>
+
+
 {% endblock scripts %}
 
 {% block content %}
-    
-    <form method="POST">
-        <div id="outergrid" class='mdl-grid project-list'>
-            <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card">
-                <div class="project-circle project-add-circle">
-                    <div class="project-circle-text">
-                        +
-                    </div>
-                </div>
-                <div class="mdl-cell project-card-description">
-                    <div class="mdl-cell mdl-cell--10-col project-card-header">
-                        Add Project
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <div id="output" class="out">
 
-            </div>
-            <!-- <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="Personal Journal of Short Stories">
-                <div class="project-circle">
-                    <div class="project-circle-text">
-                        P
-                    </div>
-                </div>
-
-                <div class="mdl-cell project-card-description" >
-                    <div class="mdl-cell mdl-cell--12-col project-card-header">
-                        Personal Journal of Short Stories
-                        <hr>
-                    </div>
-                    <div class="mdl-cell mdl-cell--12-col">
-                        <div class="mdl-cell--12-col">
-                            <b>Current Goal: </b>Complete Under and Above short story
-                        </div>
-                        <div class="mdl-cell--12-col">
-                            <b>Last Updated: </b> Nov. 5 at 4:14pm
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name="AE Research">
-                <div class="project-circle">
-                    <div class="project-circle-text">
-                        A
-                    </div>
-                </div>
-
-                <div class="mdl-cell project-card-description">
-                    <div class="mdl-cell mdl-cell--12-col project-card-header">
-                        AE Research
-                        <hr>
-                    </div>
-                    <div class="mdl-cell mdl-cell--12-col">
-                        <div class="mdl-cell--12-col">
-                            <b>Current Goal: </b>Complete executive summary v. 1.1
-                        </div>
-                        <div class="mdl-cell--12-col">
-                            <b>Last Updated: </b> Nov. 4 at 8:19pm
-                        </div>
-                    </div>
-
-                </div>
-            </div> -->
-
-        </div>
-    </form>
+<form method="POST">
+	<div class='mdl-grid project-list' id="projectList">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card add-project-card">
+			<div class="project-circle project-add-circle">
+				<div class="project-circle-text">
+					+
+				</div>
+			</div>
+			<div class="mdl-cell project-card-description">
+				<div class="mdl-cell mdl-cell--10-col project-card-header">
+					Add Project
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 {% endblock content %}

@@ -1,0 +1,48 @@
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Writer's Bloc New User</title>
+  <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+
+  <script>
+      $('.message a').click(function() {
+          $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+      });
+  </script>
+
+  <div class="login-page">
+    <img src='/static/images/logo.png' style="margin-top:4em; margin-bottom:4em;">
+    <div class="form">
+      <form class="login-form" method="POST">
+
+            <input type="text" placeholder="first name" name="first_name" required>
+            <input type="text" placeholder="last name" name="last_name" required>
+            <input type="text" placeholder="email" name="email" required>
+            <input type="password" placeholder="password" name="password" id="password" required>
+            <input type="password" placeholder="confirm password" name="password" id="confirm_password" oninput="check(this)" required>
+            <script language='javascript' type='text/javascript'>
+                function check(input) {
+                    if (input.value != document.getElementById('password').value) {
+                        input.setCustomValidity('Password Must be Matching.');
+                    } else {
+                        // input is valid -- reset the error message
+                        input.setCustomValidity('');
+                    }
+                }
+            </script>
+      <!--   <input type="text" placeholder="email" name="email"/>
+        <input type="password" placeholder="password" name="password"/> -->
+        <button>login</button>
+        <p class="message">Already have an account? <a href="/login">Login</a></p>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
