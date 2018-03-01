@@ -43,8 +43,9 @@
 
 <script>
     $(document).on('click', '.project-card:not(".add-project-card")', function() {
-        window.location.replace('/projects/' + $(this).attr('data-name'));
-        console.log($(this).attr('data-name'));
+    	var project_name =  $(this).attr('data-name');
+    	window.location.replace('{{ url_for('project_management', project_name=project_name) }}'+project_name);
+        // console.log($(this).attr('data-name'));
     });
     var addProjectForm = `
         <form action="#" class="modal-form">

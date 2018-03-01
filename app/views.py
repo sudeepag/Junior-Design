@@ -81,7 +81,8 @@ def revert_goal():
 @app.route('/projects/<project_name>')
 @login_required
 def project_management(project_name):
-    return render_template('project_management.html', page_name=project_name)
+    print(project_name)
+    return render_template('project_management.html', page_name=project_name, projects=db.user.projects)
 
 @app.route('/analytics')
 @login_required
