@@ -55,41 +55,56 @@ class DatabaseHelper:
         # new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
         #                       data["creation_date"], data["creation_date"], data["words"], data["goals"])
         self.user.projects.append(data)
-        print('Successful creation of a new project!\n%s' % str(new_project))
+        print('Successful creation of a new project!')
 
     def create_goal(self, project_name, name):
         print("goal creatingfor ", project_name)
         for p in self.user.projects:
             print(p['name'], p['id'])
             if p['name'] == project_name:
-                aNum = p['id']
-                print('yes', aNum)
+                id = p['id']
+                print('yes', id)
+                break
             else:
                 print('no')
-        print("found a num")
+        print('current project', self.user.projects[id])
+        print('current project goals', self.user.projects[id]['goals'])
         time = str(datetime.datetime.now())
-        data = {"user_id": self.user.id, "name": name, "current_goal_id": "None", "creation_date": time,
+        data = {"user_id": self.user.id, "name": name, "current_goal_id": 0, "creation_date": time,
                 "last_updated": time, "words": 0, "completed": False}
-        self.db.child("users").child(self.user.id).child("projects").child(aNum).child("goals").child(name) \
+        self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
             .set(data)
         # self.db.child("goals").set(data)
         new_goal = Goal(len(self.user.projects), name, self.user.id, data["current_goal_id"],
                         data["creation_date"], data["creation_date"], data["words"], data["completed"])
-        self.projects.goals.append(new_goal)
-        print('Successful creation of a new goal!\n%s' % str(new_goal))
+        # self.user.projects.goals.append(new_goal)
+        print('Successful creation of a new goal!')
 
     def complete_goal(self, project_name, name):
-        for p in self.db.child("users").child(self.user.id).child("projects"):
-            if p.name == project_name:
-                id = p.id
+        for p in self.user.projects:
+            print(p['name'], p['id'])
+            if p['name'] == project_name:
+                id = p['id']
+                print('yes', id)
+                break
+            else:
+                print('no')
+        
         self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
             .child("completed").set(True)
         print('Successful completion of a goal!\n%s' % str(new_goal))
 
     def revert_goal(self, project_name, name):
-        for p in self.db.child("users").child(self.user.id).child("projects"):
-            if p.name == project_name:
-                id = p.id
+        for p in self.user.projects:
+            print(p['name'], p['id'])
+            if p['name'] == project_name:
+                id = p['id']
+                print('yes', id)
+                break
+            else:
+                print('no')
+        print("found a num")
+        
         self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
             .child("completed").set(False)
         print('Successful reverted a goal!\n%s' % str(new_goal))

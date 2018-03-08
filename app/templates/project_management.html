@@ -21,11 +21,21 @@
 			</form>
 		`;
 		var addWorkForm = `
+
 			<form action="#" class="modal-form">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<select class="mdl-textfield__input" id="typeWork" name="typeWork">
+					<option></option>
+					<option value="words">Words</option>
+					<option value="paragraphs">Paragraphs</option>
+					<option value="pages">Pages</option>
+					</select>
+					<label class="mdl-textfield__label" for="typeWork">Type of Work</label>
+				</div> 
 				<div class="mdl-textfield mdl-js-textfield">
 					<input class="mdl-textfield__input" type="number" id="number" />
-					<label class="mdl-textfield__label" for="number">Number of Words</label>
-				</div>
+					<label class="mdl-textfield__label" for="number">Number Written</label>
+				</div>                        
 			</form>
 		`;
 		var workHistory = `
