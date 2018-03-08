@@ -5,7 +5,46 @@
 {% endblock page_name %}
 
 {% block scripts %}
+
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+
 <script>
+		{% for p in projects %}
+			if('{{p.name}}' === '{{page_name}}') {
+		    	addOverview('{{p.creation_date}}', '{{p.words}}')
+		    }
+		{% endfor %}
+
+		function addOverview(date, words) {
+			document.getElementById("overview").innerHTML += (
+				'<div class="mdl-grid mdl-grid mdl-cell--12-col content-header"> \
+					<div class="material-icons">assignment</div> Project Overview \
+					<hr> \
+				</div> \
+				<ul class="demo-list-item mdl-list"> \
+					<li class="mdl-list__item"> \
+					<span class="mdl-list__item-primary-content"> \
+					  <b>Creation Date: </b>' + date.substring(0, 10) +
+					'</span> \
+					</li> \
+					<li class="mdl-list__item"> \
+					<span class="mdl-list__item-primary-content"> \
+					  <b>Number of Contributions: </b>' + 'put contributions here' +
+					'</span> \
+					</li> \
+					<li class="mdl-list__item"> \
+					<span class="mdl-list__item-primary-content"> \
+					  <b>Total Words Added: </b>' + words +
+					'</span> \
+					</li> \
+				</ul> \
+				<div class="mdl-grid mdl-grid mdl-cell--12-col"> \
+					<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored analytics-button" href="/analytics"> \
+						<div class="material-icons">show_chart</div> View Analytics \
+					</a> \
+				</div>'
+			);
+		}
 		$(document).on('keyup keypress', 'form input[type="text"]', function(e) {
 		  if(e.which == 13) {
 		    e.preventDefault();
@@ -366,35 +405,9 @@
 		</div>
 	</div>
 </div>
-<div class="mdl-color--grey-200 mdl-shadow--8dp mdl-cell--4-col project-overview">
-	<div class="mdl-grid">
-		<div class="mdl-grid mdl-grid mdl-cell--12-col content-header">
-			<div class="material-icons">assignment</div> Project Overview
-			<hr>
-		</div>
-		<ul class="demo-list-item mdl-list">
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-				  <b>Creation Date: </b>Oct 21
-				</span>
-			</li>
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-				  <b>Number of Contributions: </b>6
-				</span>
-			</li>
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-				  <b>Total Words Added: </b>1605
-				</span>
-			</li>
-		</ul>
-		<div class="mdl-grid mdl-grid mdl-cell--12-col">
-			<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored analytics-button" href="/analytics">
-				<div class="material-icons">show_chart</div> View Analytics
-			</a>
+
+	<div class="mdl-color--grey-200 mdl-shadow--8dp mdl-cell--4-col project-overview">
+		<div class="mdl-grid" id="overview">
 		</div>
 	</div>
-</div>
-
 {% endblock content %}
