@@ -42,6 +42,18 @@
 </script>
 
 <script>
+
+    var FIREBASE_CREDENTIALS = {
+        'apiKey': "AIzaSyDpcs6rtT7S0e0W8u5tYrhHZWvaW7P_gUE",
+        'authDomain': "writers-bloc.firebaseapp.com",
+        'databaseURL': "https://writers-bloc.firebaseio.com",
+        'projectId': "writers-bloc",
+        'storageBucket': "writers-bloc.appspot.com",
+        'messagingSenderId': "59932670136",
+        'serviceAccount': 'app/writers-bloc-firebase-adminsdk-0pw3s-3084128171.json'
+    }
+    // firebase = firebase.initializeApp(FIREBASE_CREDENTIALS)
+		
     $(document).on('click', '.project-card:not(".add-project-card")', function() {
     	var project_name =  $(this).attr('data-name');
     	window.location.replace('{{ url_for('project_management', project_name=project_name) }}'+project_name);
