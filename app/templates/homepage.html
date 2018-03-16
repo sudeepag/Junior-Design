@@ -10,12 +10,12 @@
 <script>
 
 		{% for p in projects %}
-		    createCards('{{p.name}}', '{{p.current_goal_id}}', '{{p.creation_date}}')
+		    createCards('{{p.id}}', '{{p.name}}', '{{p.current_goal_id}}', '{{p.creation_date}}')
 		{% endfor %}
 
-		function createCards(name, current_goal_id, creation_date) {
+		function createCards(id, name, current_goal_id, creation_date) {
 			document.getElementById("projectList").innerHTML += (
-				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name=' + name + '> \
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name=' + id + '> \
 					<div class="project-circle"> \
 						<div class="project-circle-text"> ' +
 							name.substring(0,1) +
@@ -55,8 +55,8 @@
     // firebase = firebase.initializeApp(FIREBASE_CREDENTIALS)
 		
     $(document).on('click', '.project-card:not(".add-project-card")', function() {
-    	var project_name =  $(this).attr('data-name');
-    	window.location.replace('{{ url_for('project_management', project_name=project_name) }}'+project_name);
+    	var project_id =  $(this).attr('data-name');
+    	window.location.replace('{{ url_for('project_management', project_id=project_id) }}'+project_id);
         // console.log($(this).attr('data-name'));
     });
     var addProjectForm = `

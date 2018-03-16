@@ -11,7 +11,6 @@ FIREBASE_CREDENTIALS = {
     'serviceAccount': 'app/writers-bloc-firebase-adminsdk-0pw3s-3084128171.json'
 }
 
-
 class DatabaseHelper:
     def __init__(self):
         self.firebase = pyrebase.initialize_app(FIREBASE_CREDENTIALS)
@@ -39,7 +38,10 @@ class DatabaseHelper:
                 res = [res]
             for r in res:
                 self.user.projects.append(r)
-            print(self.user.projects)
+            for project in self.user.projects:
+                print(project)
+                print()
+                print()
 
     def create_user(self, first_name, last_name, email, password):
         db_user = self.auth.create_user_with_email_and_password(email, password)
@@ -75,9 +77,9 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
             .set(data)
         # self.db.child("goals").set(data)
-        new_goal = Goal(len(self.user.projects), name, self.user.id, data["current_goal_id"],
+        new_goal = Goal(len(self.user.projects[id]['goals']), name, self.user.id, data["current_goal_id"],
                         data["creation_date"], data["creation_date"], data["words"], data["completed"])
-        # self.user.projects.goals.append(new_goal)
+        self.user.projects.goals.append(new_goal)
         print('Successful creation of a new goal!')
 
     def complete_goal(self, project_name, name):
@@ -108,6 +110,12 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
             .child("completed").set(False)
         print('Successful reverted a goal!\n%s' % str(new_goal))
+
+    def project_for_id(self, id):
+        for project in self.user.projects:
+            if str(project['id']) == id:
+                return project
+        return None
 
 
 class User:

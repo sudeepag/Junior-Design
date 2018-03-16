@@ -78,11 +78,13 @@ def revert_goal():
 		except Exception as e:
 			return render_template("error.html", error = str(e))
 
-@app.route('/projects/<project_name>')
+@app.route('/projects/<project_id>')
 @login_required
-def project_management(project_name):
-    print(project_name)
-    return render_template('project_management.html', page_name=project_name, projects=db.user.projects)
+def project_management(project_id):
+    print(project_id)
+    project = db.project_for_id(project_id)
+    print(project)
+    return render_template('project_management.html', page_name=project['name'], project=project)
 
 @app.route('/analytics')
 @login_required
