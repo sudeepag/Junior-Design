@@ -89,7 +89,7 @@ class DatabaseHelper:
                 break
             else:
                 print('no')
-        
+
         self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
             .child("completed").set(True)
         print('Successful completion of a goal!\n%s' % str(new_goal))
@@ -104,7 +104,7 @@ class DatabaseHelper:
             else:
                 print('no')
         print("found a num")
-        
+
         self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
             .child("completed").set(False)
         print('Successful reverted a goal!\n%s' % str(new_goal))
