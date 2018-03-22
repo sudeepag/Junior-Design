@@ -52,7 +52,7 @@ class DatabaseHelper:
         time = str(datetime.datetime.now())
         id = len(self.user.projects)
         data = {"id": id, "user_id": self.user.id, "name": name, "current_goal_id": "None",
-                "creation_date": time, "last_updated": time, "words": 0, "goals": 0}
+                "creation_date": time, "last_updated": time, "contributions": [], "goals": []}
         self.db.child("users").child(self.user.id).child("projects").child(id).set(data)
         # new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
         #                       data["creation_date"], data["creation_date"], data["words"], data["goals"])
