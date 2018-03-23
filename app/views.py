@@ -48,8 +48,8 @@ def new_project():
 @app.route('/new_goal', methods=['POST'])
 def new_goal():
     if request.method == 'POST':
-        project_name = request.form['project']
-        print("project name", project_name)
+        project_id = request.form['project']
+        print("project name", project_id)
         goal_name = request.form['goal_name']
         print("goal name ", goal_name)
         try:

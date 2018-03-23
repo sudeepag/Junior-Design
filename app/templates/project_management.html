@@ -11,11 +11,13 @@
 <script>
 		addOverview('{{project.creation_date}}', '{{project.words}}')
 		{% for goal in project.goals %}
-			if('{{project.goals[goal]['completed']}}' === 'True') {
-				addCompletedGoals('{{project.goals[goal]['name']}}')
-			} else {
-				addGoalsInProgress('{{project.goals[goal]['name']}}')
-			}
+			if (goal != null) {
+                if('{{project.goals[goal]['completed']}}' === 'True') {
+                    addCompletedGoals('{{project.goals[goal]['name']}}')
+                } else {
+                    addGoalsInProgress('{{project.goals[goal]['name']}}')
+                }
+            }
 		{% endfor %}
 		function addOverview(date, words) {
 			document.getElementById("overview").innerHTML += (
