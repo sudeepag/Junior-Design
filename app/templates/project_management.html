@@ -7,17 +7,15 @@
 {% block scripts %}
 
 <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-
+<!--print(project['goals'][0]['completed']) : False-->
 <script>
-		addOverview('{{project.creation_date}}', '{{project.words}}')
-		{% for goal in project.goals %}
-			if (goal != null) {
-                if('{{project.goals[goal]['completed']}}' === 'True') {
-                    addCompletedGoals('{{project.goals[goal]['name']}}')
-                } else {
-                    addGoalsInProgress('{{project.goals[goal]['name']}}')
-                }
-            }
+		addOverview('{{project.creation_date}}', '{{project.words}}');
+		{% for goal in project['goals'] %}
+			if('{{goal["completed"]}}' === 'True') {
+				addCompletedGoals('{{goal["name"]}}')
+			} else {
+				addGoalsInProgress('{{goal["name"]}}')
+			}
 		{% endfor %}
 		function addOverview(date, words) {
 			document.getElementById("overview").innerHTML += (

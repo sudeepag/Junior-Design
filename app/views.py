@@ -87,13 +87,13 @@ def revert_goal():
 def project_management(project_id):
     print(project_id)
     project = db.project_for_id(project_id)
-    print(project)
+    print(project['goals'])
     return render_template('project_management.html', page_name=project['name'], project=project)
 
 @app.route('/analytics')
 @login_required
 def dashboard():
-    return render_template('dashboard.html', page_name="Analytics")
+    return render_template('dashboard.+html', page_name="Analytics")
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
