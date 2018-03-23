@@ -40,8 +40,6 @@ class DatabaseHelper:
                 self.user.projects.append(r)
             for project in self.user.projects:
                 print(project)
-                print()
-                print()
 
     def create_user(self, first_name, last_name, email, password):
         db_user = self.auth.create_user_with_email_and_password(email, password)
@@ -59,27 +57,19 @@ class DatabaseHelper:
         self.user.projects.append(data)
         print('Successful creation of a new project!')
 
-    def create_goal(self, project_name, name):
-        print("goal creatingfor ", project_name)
-        for p in self.user.projects:
-            print(p['name'], p['id'])
-            if p['name'] == project_name:
-                id = p['id']
-                print('yes', id)
-                break
-            else:
-                print('no')
-        print('current project', self.user.projects[id])
-        print('current project goals', self.user.projects[id]['goals'])
+    def create_goal(self, project_id, name):
+        print("hello world -------------------------------------")
+        print("goal creating for ", str(project_id))
+        id = len(self.user.projects[project_id]['goals'])
         time = str(datetime.datetime.now())
-        data = {"user_id": self.user.id, "name": name, "current_goal_id": 0, "creation_date": time,
-                "last_updated": time, "words": 0, "completed": False}
-        self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
+        data = {"user_id": self.user.id, "project_id": project_id, "name": name, "creation_date": time,
+                "contributions": [], "completed": False}
+        self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         # self.db.child("goals").set(data)
-        new_goal = Goal(len(self.user.projects[id]['goals']), name, self.user.id, data["current_goal_id"],
-                        data["creation_date"], data["creation_date"], data["words"], data["completed"])
-        self.user.projects.goals.append(new_goal)
+        new_goal = Goal(id), name, self.user.id, data["project_id"], data["name"], data["creation_date"], \
+                data["contributions"], data["completed"]
+        self.user.projects[id].goals.append(new_goal)
         print('Successful creation of a new goal!')
 
     def complete_goal(self, project_name, name):

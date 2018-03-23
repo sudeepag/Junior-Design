@@ -47,36 +47,40 @@ def new_project():
 
 @app.route('/new_goal', methods=['POST'])
 def new_goal():
-	if request.method == 'POST':
-		project_name = request.form['project_name']
-		goal_name = request.form['goal_name']
-		try:
-			db.create_goal(project_name, goal_name)
-			return goal_name
-		except Exception as e:
-			return render_template("error.html", error = str(e))
+    if request.method == 'POST':
+        project_name = request.form['project']
+        print("project name", project_name)
+        goal_name = request.form['goal_name']
+        print("goal name ", goal_name)
+        try:
+            db.create_goal(int(project_id), goal_name)
+            print("tried")
+            return goal_name
+        except Exception as e:
+            return render_template("error.html", error = str(e))
 
 @app.route('/complete_goal', methods=['POST'])
 def complete_goal():
-	if request.method == 'POST':
-		project_name = request.form['project_name']
-		goal_name = request.form['goal_name']
-		try:
-			db.complete_goal(project_name, goal_name)
-			return goal_name
-		except Exception as e:
-			return render_template("error.html", error = str(e))
+    if request.method == 'POST':
+        project_name = request.form['project_name']
+        goal_name = request.form['goal_name']
+        try:
+            db.complete_goal(project_name, goal_name)
+            print("tried")
+            return goal_name
+        except Exception as e:
+            return render_template("error.html", error = str(e))
 
 @app.route('/revert_goal', methods=['POST'])
 def revert_goal():
-	if request.method == 'POST':
-		project_name = request.form['project_name']
-		goal_name = request.form['goal_name']
-		try:
-			db.revert_goal(project_name, goal_name)
-			return goal_name
-		except Exception as e:
-			return render_template("error.html", error = str(e))
+    if request.method == 'POST':
+        project_name = request.form['project_name']
+        goal_name = request.form['goal_name']
+        try:
+            db.revert_goal(project_name, goal_name)
+            return goal_name
+        except Exception as e:
+            return render_template("error.html", error = str(e))
 
 @app.route('/projects/<project_id>')
 @login_required
