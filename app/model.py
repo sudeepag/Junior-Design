@@ -58,22 +58,17 @@ class DatabaseHelper:
         print('Successful creation of a new project!')
 
     def create_goal(self, project_id, name):
-        print("hello world -------------------------------------")
-        print("goal creating for ", str(project_id))
-        print("check")
-        id = 0
+        print("creating goal for ", str(project_id))
+        res = self.db.child('users').child(self.user.id).child('projects').child(project_id).child('goals').get().val()
+        id = len(res)
         print("id ", id)
         time = str(datetime.datetime.now())
         data = {"user_id": self.user.id, "project_id": project_id, "name": name, "creation_date": time, "completed": False}
-        print(data)
-        print("just checking")
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
-        # self.db.child("goals").set(data)
-        self.user.projects.project_id.goals.append(data)
-        print("updated list: \n ", self.user.projects.project_id.goals)
-        print('Successful creation of a new goal!')
+        # self.user.projects.goals.append(data)
+        # print("updated goals list: \n ", self.user.projects.project_id.goals)
 
     def complete_goal(self, project_name, name):
         for p in self.user.projects:

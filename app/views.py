@@ -54,7 +54,6 @@ def new_goal():
         print("goal name ", goal_name)
         try:
             db.create_goal(int(project_id), goal_name)
-            print("tried")
             return goal_name
         except Exception as e:
             return render_template("error.html", error = str(e))
@@ -66,7 +65,6 @@ def complete_goal():
         goal_name = request.form['goal_name']
         try:
             db.complete_goal(project_name, goal_name)
-            print("tried")
             return goal_name
         except Exception as e:
             return render_template("error.html", error = str(e))
@@ -80,14 +78,13 @@ def revert_goal():
             db.revert_goal(project_name, goal_name)
             return goal_name
         except Exception as e:
+            print(e)
             return render_template("error.html", error = str(e))
 
 @app.route('/projects/<project_id>')
 @login_required
 def project_management(project_id):
-    print(project_id)
     project = db.project_for_id(project_id)
-    print(project['goals'])
     return render_template('project_management.html', page_name=project['name'], project=project)
 
 @app.route('/analytics')
