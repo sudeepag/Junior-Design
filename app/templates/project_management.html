@@ -177,7 +177,7 @@
 			</button>
 		`;
 		var newGoalFormat = `
-			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" data-total=0 data-updated="{1}">
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" words-total=0 paragraphs-total=0 pages-total=0 data-updated="{1}">
 				<div class="goal-action">
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
 			  			Add work
@@ -194,6 +194,12 @@
 					<div class="mdl-cell mdl-cell--12-col">
 						<div class="mdl-cell--12-col">
 							<b>Words Added: </b><div class='total-words'>0 words</div>
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Paragraphs Added: </b><div class='total-paragraphs'>0 paragraphs</div>
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Pages Added: </b><div class='total-pages'>0 pages</div>
 						</div>
 						<div class="mdl-cell--12-col">
 							<b>Last Updated: </b><div class='last-updated'>{3}</div>
@@ -260,14 +266,27 @@
 		        positive: {
 	            	title: 'Add Work',
 	            	  onClick: function (e) {
+						var workType = $('#typeWork').val();
 	            	  	var workCount = $('#number').val();
-	            	  	if (workCount) {
+	            	  	if (workType == 'words' && workCount) {
 	            	  		var currentTime = moment();
     	  					card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
-    	  					card.attr('data-total', parseInt(card.attr('data-total')) + parseInt(workCount));
-    	  					card.find('.total-words').text('{0} words'.format(card.attr('data-total')));
+    	  					card.attr('words-total', parseInt(card.attr('words-total')) + parseInt(workCount));
+    	  					card.find('.total-words').text('{0} words'.format(card.attr('words-total')));
     	  					card.find('.last-updated').text(currentTime.calendar());
-	            	  	} else {
+	            	  	} else if (workType == 'paragraphs' && workCount) {
+							var currentTime = moment();
+    	  					card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
+    	  					card.attr('paragraphs-total', parseInt(card.attr('paragraphs-total')) + parseInt(workCount));
+    	  					card.find('.total-paragraphs').text('{0} paragraphs'.format(card.attr('paragraphs-total')));
+    	  					card.find('.last-updated').text(currentTime.calendar());
+						  } else if (workType == 'pages' && workCount) {
+							var currentTime = moment();
+    	  					card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
+    	  					card.attr('pages-total', parseInt(card.attr('pages-total')) + parseInt(workCount));
+    	  					card.find('.total-pages').text('{0} pages'.format(card.attr('pages-total')));
+    	  					card.find('.last-updated').text(currentTime.calendar());
+						  } else {
 	            	  		alert("Invalid number.");
 	            	  	}
 	            	}

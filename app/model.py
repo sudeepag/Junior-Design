@@ -128,7 +128,7 @@ class User:
 
 
 class Project:
-    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words):
+    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words, paragraphs, pages):
         self.id = id
         self.name = name
         self.user_id = user_id
@@ -136,16 +136,18 @@ class Project:
         self.creation_date = creation_date
         self.last_updated = last_updated
         self.words = words
+        self.paragraphs = paragraphs
+        self.pages = pages
         self.goals = []
 
     def __repr__(self):
-        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.goals: {}' \
+        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.paragraphs: {}\nself.pages: {}\nself.goals: {}' \
             .format(self.id, self.name, self.user_id, self.current_goal_id, self.creation_date, self.last_updated,
-                    self.words, self.goals)
+                    self.words, self.paragraphs, self.pages, self.goals)
 
 
 class Goal:
-    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words, completed):
+    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words, paragraphs, pages, completed):
         self.id = id
         self.name = name
         self.user_id = user_id
@@ -153,9 +155,11 @@ class Goal:
         self.creation_date = creation_date
         self.last_updated = last_updated
         self.words = words
+        self.paragraphs = paragraphs
+        self.pages = pages
         self.completed = completed
 
     def __repr__(self):
-        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.completed: {}' \
+        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.paragraphs: {}\nself.pages: {}\nself.completed: {}' \
             .format(self.id, self.name, self.user_id, self.current_goal_id,
-                    self.creation_date, self.last_updated, self.words, self.completed)
+                    self.creation_date, self.last_updated, self.words, self.paragraphs, self.pages, self.completed)
