@@ -29,7 +29,7 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route('/main')
+@app.route('/main', methods=['GET', 'POST'])
 @login_required
 def main():
     return render_template('homepage.html', page_name="Projects", projects=db.user.projects)
@@ -42,6 +42,18 @@ def new_project():
         try:
             db.create_project(project_name)
             return project_name
+        except Exception as e:
+            return render_template("error.html", error = str(e))
+
+@app.route('/delete_project', methods=['POST'])
+def delete_project():
+    print("project id")
+    if request.method == 'POST':
+        project_id = request.form['project_id']
+        try:
+            print("deleting project")
+            db.delete_project(project_id)
+            return project_id
         except Exception as e:
             return render_template("error.html", error = str(e))
 
