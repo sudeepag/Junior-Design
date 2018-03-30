@@ -32,7 +32,8 @@ def logout():
 @app.route('/main', methods=['GET', 'POST'])
 @login_required
 def main():
-    return render_template('homepage.html', page_name="Projects", user_id=str(db.user.id))
+    print(str(db.user.id))
+    return render_template('homepage.html', page_name="Projects", user_id=str(db.user.id), projects=db.user.projects)
 
 @app.route('/new_project', methods=['POST'])
 @login_required
