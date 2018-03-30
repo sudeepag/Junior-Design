@@ -12,9 +12,9 @@
 		addOverview('{{project.creation_date}}', '{{project.words}}');
 		{% for goal in project['goals'] %}
 			if('{{goal["completed"]}}' === 'True') {
-				addCompletedGoals('{{goal["name"]}}')
+				addCompletedGoals('{{goal["name"]}}', '{{goal["id"]}}')
 			} else {
-				addGoalsInProgress('{{goal["name"]}}')
+				addGoalsInProgress('{{goal["name"]}}', '{{goal["id"]}}')
 			}
 		{% endfor %}
 		function addOverview(date, words) {
@@ -47,9 +47,9 @@
 				</div>'
 			);
 		}
-		function addGoalsInProgress(name) {
+		function addGoalsInProgress(name, id) {
 			document.getElementById("in-progress-goals").innerHTML += (
-				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card"> \
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '"> \
 					<div class="goal-action"> \
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button"> \
 							Add work \
@@ -70,9 +70,9 @@
 				</div>'
 			);
 		}
-		function addCompletedGoals(name) {
+		function addCompletedGoals(name, id) {
 			document.getElementById("completed-goals").innerHTML += (
-				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card"> \
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '"> \
 					<div class="goal-action"> \
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button"> \
 							Revert \
@@ -285,12 +285,13 @@
 		});
 		$(document).on('click', '.complete-goal-button', function() {
 			var card = $(this).closest('.goal-card');
+			var project_id = '{{ project.id }}';
 			var goal = card[0].dataset.name;
 			console.log('card',card);
-			console.log('name',goal);
+			console.log('id',goal);
 			$.ajax({
 				url: '/complete_goal',
-				data: {'project_name': document.getElementsByClassName("mdl-layout-title").item(0).innerText, 'goal_name': goal},
+				data: {'project_id': project_id, 'goal_id': goal},
 				type: 'POST',
 
 				success: function(response){
@@ -309,12 +310,13 @@
 		$(document).on('click', '.revert-button', function() {
 			var card = $(this).closest('.goal-card');
 			card.prependTo('.in-progress-goals');
-			var goal = card[0].dataset.name;
+            var project_id = '{{ project.id }}';
+            var goal = card.attr('data-name');
 			console.log('card',card);
-			console.log('name',goal);
+			console.log('id',goal);
 			$.ajax({
 				url: '/revert_goal',
-				data: {'project_name': document.getElementsByClassName("mdl-layout-title").item(0).innerText, 'goal_name': goal},
+				data: {'project_id': project_id, 'goal_id': goal},
 				type: 'POST',
 
 				success: function(response){

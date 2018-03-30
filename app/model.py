@@ -1,6 +1,7 @@
 import pyrebase
 import datetime
 
+
 FIREBASE_CREDENTIALS = {
     'apiKey': "AIzaSyDpcs6rtT7S0e0W8u5tYrhHZWvaW7P_gUE",
     'authDomain': "writers-bloc.firebaseapp.com",
@@ -60,42 +61,28 @@ class DatabaseHelper:
     def create_goal(self, project_id, name):
         print("creating goal for ", str(project_id))
         res = self.db.child('users').child(self.user.id).child('projects').child(project_id).child('goals').get().val()
-        id = len(res)
+        if res is None:
+            id = 0
+        else:
+            id = len(res)
         print("id ", id)
         time = str(datetime.datetime.now())
-        data = {"user_id": self.user.id, "project_id": project_id, "name": name, "creation_date": time, "completed": False}
+        data = {"id": id, "user_id": self.user.id, "project_id": project_id, "name": name, "creation_date": time, "completed": False}
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
         # self.user.projects.goals.append(data)
         # print("updated goals list: \n ", self.user.projects.project_id.goals)
 
-    def complete_goal(self, project_name, name):
-        for p in self.user.projects:
-            print(p['name'], p['id'])
-            if p['name'] == project_name:
-                id = p['id']
-                print('yes', id)
-                break
-            else:
-                print('no')
 
-        self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
+
+    def complete_goal(self, project_id, goal_id):
+        self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(True)
         print('Successful completion of a goal!\n%s' % str(new_goal))
 
-    def revert_goal(self, project_name, name):
-        for p in self.user.projects:
-            print(p['name'], p['id'])
-            if p['name'] == project_name:
-                id = p['id']
-                print('yes', id)
-                break
-            else:
-                print('no')
-        print("found a num")
-
-        self.db.child("users").child(self.user.id).child("projects").child(id).child("goals").child(name) \
+    def revert_goal(self, project_id, goal_id):
+        self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(False)
         print('Successful reverted a goal!\n%s' % str(new_goal))
 
