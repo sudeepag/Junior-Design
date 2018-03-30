@@ -75,7 +75,6 @@ class DatabaseHelper:
         # print("updated goals list: \n ", self.user.projects.project_id.goals)
 
 
-
     def complete_goal(self, project_id, goal_id):
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(True)
