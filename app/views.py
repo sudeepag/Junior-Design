@@ -32,7 +32,6 @@ def logout():
 @app.route('/main', methods=['GET', 'POST'])
 @login_required
 def main():
-    print(str(db.user.id))
     return render_template('homepage.html', page_name="Projects", user_id=str(db.user.id), projects=db.user.projects)
 
 @app.route('/new_project', methods=['POST'])
@@ -48,9 +47,9 @@ def new_project():
 
 @app.route('/delete_project', methods=['POST'])
 def delete_project():
-    print("project id")
     if request.method == 'POST':
         project_id = request.form['project_id']
+        print("deleting project " + str(project_id))
         try:
             print("deleting project")
             db.delete_project(project_id)
