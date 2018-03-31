@@ -7,12 +7,11 @@
 {% block scripts %}
 <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 <script>
-
 		{% for p in projects %}
-		    createCards('{{p.id}}', '{{p.name}}', '{{p.current_goal_id}}', '{{p.creation_date}}')
+		    createCard('{{p.id}}', '{{p.name}}', '{{p.current_goal_id}}', '{{p.creation_date}}')
 		{% endfor %}
 
-		function createCards(id, name, current_goal_id, creation_date) {
+		function createCard(id, name, current_goal_id, creation_date) {
 			document.getElementById("projectList").innerHTML += (
 				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-grid mdl-cell--6-col project-card" data-name=' + id + '> \
 					<div class="project-circle"> \
@@ -57,6 +56,7 @@
 		
     $(document).on('click', '.project-card:not(".add-project-card")', function() {
     	var project_id =  $(this).attr('data-name');
+    	// console.log(project_id);
     	window.location.replace('{{ url_for('project_management', project_id=project_id) }}'+project_id);
         // console.log($(this).attr('data-name'));
     });
@@ -115,6 +115,7 @@
 								project.substring(0, 1),
 								project,
 								currentTime.calendar());
+						// createCard()
 						$('.project-list>div:eq(0)').after(newProjectHtml);
 						//element.insertAdjacentHTML('beforeend', newGoalHtml)
 						$.ajax({

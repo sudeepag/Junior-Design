@@ -40,7 +40,7 @@ def new_project():
     if request.method == 'POST':
         project_name = request.form['project_name']
         try:
-            db.create_project(project_name)
+            project_id = db.create_project(project_name)
             return project_name
         except Exception as e:
             return render_template("error.html", error = str(e))
@@ -96,6 +96,7 @@ def revert_goal():
 @app.route('/projects/<project_id>')
 @login_required
 def project_management(project_id):
+    print('caling project_for_id with id', project_id)
     project = db.project_for_id(project_id)
     print(project)
     return render_template('project_management.html', page_name=project['name'], project=project)

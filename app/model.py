@@ -56,7 +56,8 @@ class DatabaseHelper:
         # new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
         #                       data["creation_date"], data["creation_date"], data["words"], data["goals"])
         self.user.projects.append(data)
-        print('Successful creation of a new project!')
+        print('Successful creation of a new project!', data)
+        return id
 
     def delete_project(self, project_id):
         # time = str(datetime.datetime.now())
@@ -90,6 +91,7 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
+        self.user.projects[project_id]['goals'][id] = data
         # self.user.projects.goals.append(data)
         # print("updated goals list: \n ", self.user.projects.project_id.goals)
 
@@ -105,6 +107,7 @@ class DatabaseHelper:
         print('Successful reverted a goal!\n%s' % str(new_goal))
 
     def project_for_id(self, id):
+        print('finding project for id', id)
         for project in self.user.projects:
             if str(project['id']) == id:
                 return project
