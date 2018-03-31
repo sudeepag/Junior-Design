@@ -43,6 +43,13 @@ class DatabaseHelper:
             for project in self.user.projects:
                 print(project)
 
+    def fetch_contributions(self, goals):
+        conts_by_id = {}
+        for goal in goals:
+            conts_by_id[goal['id']] = goal['contributions']
+        print(conts_by_id)
+        return conts_by_id
+
     def create_user(self, first_name, last_name, email, password):
         db_user = self.auth.create_user_with_email_and_password(email, password)
         data = {"first_name": first_name, "last_name": last_name, "email": email}
