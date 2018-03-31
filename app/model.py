@@ -61,21 +61,6 @@ class DatabaseHelper:
         return id
 
     def delete_project(self, project_id):
-        # time = str(datetime.datetime.now())
-        # id = len(self.user.projects)
-        # data = {"id": id, "user_id": self.user.id, "name": name, "current_goal_id": "None",
-        #         "creation_date": time, "last_updated": time, "contributions": [], "goals": []}
-        # self.db.child("users").child(self.user.id).child("projects").child(id).set(data)
-        # new_project = Project(len(self.user.projects), name, self.user.id, data["current_goal_id"],
-        #                       data["creation_date"], data["creation_date"], data["words"], data["goals"])
-        # self.user.projects.remove(project_id)
-        # print("project id", project_id)
-        # print(self.user.projects)
-        # for p in self.user.projects:
-        #     print(p.get('id'))
-        #     if p.get('id') == project_id:
-        #         self.user.projects.remove(p)
-        # print(self.user.projects)
         self.db.child("users").child(self.user.id).child("projects").child(project_id).remove()
         print('Successful removal of a project!')
 
@@ -106,6 +91,25 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(False)
         print('Successful reverted a goal!\n%s' % str(new_goal))
+
+    def create_contribution(self, project_id, goal_id, work_type, work_count):
+        print("creating contribution for ", str(goal_id))
+        res = self.db.child('users').child(self.user.id).child('projects') \
+                    .child(project_id).child('goals').child(goal_id).child("contributions") \
+                    .get().val()
+        if res is None:
+            id = 0
+        else:
+            id = len(res)
+        print("id ", id)
+        time = str(datetime.datetime.now())
+        data = {"id": id, "user_id": self.user.id, "project_id": project_id, \
+                "goal_id": goal_id, "creation_date": time, "work_count": work_count,
+                 "work_type": work_type}
+        self.db.child("users").child(self.user.id).child("projects").child(project_id) \
+            .child("goals").child(goal_id).child("contributions").child(id) \
+            .set(data)
+        print("set data in firebase")
 
     def project_for_id(self, id):
         print('finding project for id', id)

@@ -258,6 +258,8 @@
 		});
         $(document).on('click', '.add-work-button', function() {
 			var card = $(this).closest('.goal-card');
+            var project_id = '{{ project.id }}';
+            var goal = card[0].dataset.name;
 			showDialog({
 		        text: addWorkForm,
 		        negative: {
@@ -266,30 +268,46 @@
 		        positive: {
 	            	title: 'Add Work',
 	            	  onClick: function (e) {
+						console.log(project_id);
+						console.log(goal);
 						var workType = $('#typeWork').val();
-	            	  	var workCount = $('#number').val();
-	            	  	if (workType == 'words' && workCount) {
-	            	  		var currentTime = moment();
-    	  					card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
-    	  					card.attr('words-total', parseInt(card.attr('words-total')) + parseInt(workCount));
-    	  					card.find('.total-words').text('{0} words'.format(card.attr('words-total')));
-    	  					card.find('.last-updated').text(currentTime.calendar());
-	            	  	} else if (workType == 'paragraphs' && workCount) {
+						console.log(workType);
+						var workCount = $('#number').val();
+						  console.log(workCount);
+						if (workType == 'words' && workCount) {
 							var currentTime = moment();
-    	  					card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
-    	  					card.attr('paragraphs-total', parseInt(card.attr('paragraphs-total')) + parseInt(workCount));
-    	  					card.find('.total-paragraphs').text('{0} paragraphs'.format(card.attr('paragraphs-total')));
-    	  					card.find('.last-updated').text(currentTime.calendar());
+							card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
+							card.attr('words-total', parseInt(card.attr('words-total')) + parseInt(workCount));
+							card.find('.total-words').text('{0} words'.format(card.attr('words-total')));
+							card.find('.last-updated').text(currentTime.calendar());
+						} else if (workType == 'paragraphs' && workCount) {
+							var currentTime = moment();
+							card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
+							card.attr('paragraphs-total', parseInt(card.attr('paragraphs-total')) + parseInt(workCount));
+							card.find('.total-paragraphs').text('{0} paragraphs'.format(card.attr('paragraphs-total')));
+							card.find('.last-updated').text(currentTime.calendar());
 						  } else if (workType == 'pages' && workCount) {
 							var currentTime = moment();
-    	  					card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
-    	  					card.attr('pages-total', parseInt(card.attr('pages-total')) + parseInt(workCount));
-    	  					card.find('.total-pages').text('{0} pages'.format(card.attr('pages-total')));
-    	  					card.find('.last-updated').text(currentTime.calendar());
+							card.attr('data-updated', currentTime.format('MMMM Do YYYY, h:mm:ss a'));
+							card.attr('pages-total', parseInt(card.attr('pages-total')) + parseInt(workCount));
+							card.find('.total-pages').text('{0} pages'.format(card.attr('pages-total')));
+							card.find('.last-updated').text(currentTime.calendar());
 						  } else {
-	            	  		alert("Invalid number.");
-	            	  	}
-	            	}
+							alert("Invalid number.");
+						}
+						  $.ajax({
+							  data: {'project_id': project_id, 'goal_id': goal,'work_type': workType,'work_count': workCount},
+							  url: '/add_work',
+							  type: 'POST',
+
+							  success: function(response){
+								  console.log();
+							  },
+							  error: function(error){
+								  console.log(error);
+							  }
+						  });
+					}
 	            }
 	        });
 		});

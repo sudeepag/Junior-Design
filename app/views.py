@@ -95,6 +95,21 @@ def revert_goal():
             print(e)
             return render_template("error.html", error = str(e))
 
+@app.route('/add_work', methods=['POST'])
+def add_work():
+    if request.method == 'POST':
+        project_id = request.form['project_id']
+        goal_id = request.form['goal_id']
+        work_type = request.form['work_type']
+        work_count = request.form['work_count']
+        try:
+            db.create_contribution(project_id, goal_id, work_type, work_count)
+            return work_count
+        except Exception as e:
+            print(e)
+            return render_template("error.html", error = str(e))
+    return 0
+
 @app.route('/projects/<project_id>')
 @login_required
 def project_management(project_id):
