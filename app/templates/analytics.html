@@ -1,0 +1,173 @@
+{% extends 'dashboard.html' %}
+
+{% block page_name %}
+{{page_name}}
+{% endblock page_name %}
+
+{% block scripts %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+	function getSum(total, num) {
+	    return total + num;
+	}
+	var words = [];
+	var words_t = [];
+	var paragraphs = [];
+	var paragraphs_t = [];
+	var pages = [];
+	var pages_t = [];
+	{% for goal in project['goals'] %}
+		{% for contribution in goal['contributions'] %}
+			if ("{{contribution['work_type']}}" == 'words') {
+				words.push(parseInt("{{contribution['work_count']}}"));
+				words_t.push("{{contribution['creation_date']}}");
+			} else if ("{{contribution['work_type']}}" == 'paragraphs') {
+				paragraphs.push(parseInt("{{contribution['work_count']}}"));
+				paragraphs_t.push("{{contribution['creation_date']}}");
+			} else if ("{{contribution['work_type']}}" == 'pages') {
+				pages.push(parseInt("{{contribution['work_count']}}"));
+				pages_t.push("{{contribution['creation_date']}}");
+			}
+		{% endfor %}
+	{% endfor %}
+	console.log('WORDS: ' + words);
+	console.log('PARAGRAPHS: ' + paragraphs);
+	console.log('PAGES: ' + pages);
+	function wordsPlot() {
+		var words_trace = {
+		  x: words_t,
+		  y: words,
+		  type: 'scatter'
+		};
+
+		var layout = {
+		  title:'Word Contributions',
+		  xaxis: {
+		    title: 'Contribution Time'
+		  },
+		  yaxis: {
+		    title: 'Number of Words'
+		  }
+		};
+
+		var data = [words_trace];
+		Plotly.newPlot('words_div', data, layout);
+	}
+	function paragraphsPlot() {
+		var paragraphs_trace = {
+		  x: paragraphs_t,
+		  y: paragraphs,
+		  type: 'scatter'
+		};
+
+		var layout = {
+		  title:'Paragraph Contributions',
+		  xaxis: {
+		    title: 'Contribution Time'
+		  },
+		  yaxis: {
+		    title: 'Number of Paragraphs'
+		  }
+		};
+
+		var data = [paragraphs_trace];
+		Plotly.newPlot('paragraphs_div', data, layout);
+	}
+	function pagesPlot() {
+		var pages_trace = {
+		  x: pages_t,
+		  y: pages,
+		  type: 'scatter'
+		};
+
+		var layout = {
+		  title:'Page Contributions',
+		  xaxis: {
+		    title: 'Contribution Time'
+		  },
+		  yaxis: {
+		    title: 'Number of Pages'
+		  }
+		};
+
+		var data = [pages_trace];
+		Plotly.newPlot('pages_div', data, layout);
+	}
+
+	wordsPlot()
+	paragraphsPlot()
+	pagesPlot()
+	
+</script>
+{% endblock scripts %}
+
+{% block content %}
+<!-- <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+              <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                <use xlink:href="#piechart" mask="url(#piemask)" />
+                <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan font-size="0.2" dy="-0.07">%</tspan></text>
+              </svg>
+              <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                <use xlink:href="#piechart" mask="url(#piemask)" />
+                <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+              </svg>
+              <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                <use xlink:href="#piechart" mask="url(#piemask)" />
+                <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+              </svg>
+              <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                <use xlink:href="#piechart" mask="url(#piemask)" />
+                <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+              </svg>
+            </div> -->
+            <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+            	<div id='words_div'></div>
+            	<div id='paragraphs_div'></div>
+            	<div id='pages_div'></div>
+              <!-- <svg fill="currentColor" viewBox="0 0 500 250" class="demo-graph">
+                <use xlink:href="#chart" />
+              </svg>
+              <svg fill="currentColor" viewBox="0 0 500 250" class="demo-graph">
+                <use xlink:href="#chart" />
+              </svg> -->
+            </div>
+            <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+              <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+                <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                  <h2 class="mdl-card__title-text">Insights</h2>
+                </div>
+                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                  Get suggestions on how to be more productive in meeting your goals.
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                  <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+                </div>
+              </div>
+              <div class="demo-separator mdl-cell--1-col"></div>
+              <div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+                <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                  <h3>View options</h3>
+                  <ul>
+                    <li>
+                      <label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                        <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">Words</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="chkbox2" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                        <input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">Paragraphs</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="chkbox3" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                        <input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">Pages</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+{% endblock content %}

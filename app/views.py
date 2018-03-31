@@ -113,15 +113,17 @@ def add_work():
 @app.route('/projects/<project_id>')
 @login_required
 def project_management(project_id):
-    print('caling project_for_id with id', project_id)
     project = db.project_for_id(project_id)
     print(project)
     return render_template('project_management.html', page_name=project['name'], project=project)
 
-@app.route('/analytics')
+@app.route('/analytics/<project_id>')
 @login_required
-def dashboard():
-    return render_template('dashboard.+html', page_name="Analytics")
+def analytics(project_id):
+    db.fetch_projects()
+    project = db.project_for_id(project_id)
+    print(project)
+    return render_template('analytics.html', page_name=project['name'], project=project)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
