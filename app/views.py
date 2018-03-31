@@ -32,6 +32,7 @@ def logout():
 @app.route('/main', methods=['GET', 'POST'])
 @login_required
 def main():
+    db.fetch_projects()
     return render_template('homepage.html', page_name="Projects", user_id=str(db.user.id), projects=db.user.projects)
 
 @app.route('/new_project', methods=['POST'])
@@ -41,7 +42,8 @@ def new_project():
         project_name = request.form['project_name']
         try:
             project_id = db.create_project(project_name)
-            return project_name
+            print('project id', project_id)
+            return str(project_id)
         except Exception as e:
             return render_template("error.html", error = str(e))
 

@@ -33,6 +33,7 @@ class DatabaseHelper:
         self.user = None
 
     def fetch_projects(self):
+        self.user.projects = []
         res = self.db.child('users').child(self.user.id).child('projects').get().val()
         if res:
             if type(res) == dict:

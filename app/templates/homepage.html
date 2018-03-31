@@ -110,25 +110,26 @@
 					var project = $("#project").val();
 					if (project) {
 						var currentTime = moment();
-						var newProjectHtml =  newProjectFormat.format(
-								project,
-								project.substring(0, 1),
-								project,
-								currentTime.calendar());
-						// createCard()
-						$('.project-list>div:eq(0)').after(newProjectHtml);
-						//element.insertAdjacentHTML('beforeend', newGoalHtml)
 						$.ajax({
 							url: '/new_project',
 							data: {'project_name': project},
 							type: 'POST',
 							success: function(response){
+								var newProjectHtml =  newProjectFormat.format(
+								response,
+								project.substring(0, 1),
+								project,
+								currentTime.calendar());
+								// createCard()
+								$('.project-list>div:eq(0)').after(newProjectHtml);
+								//element.insertAdjacentHTML('beforeend', newGoalHtml)
 								console.log(response);
 							},
 							error: function(error){
 								console.log(error);
 							}
 						});
+
 					} else {
 						alert("Invalid project.");
 					}
