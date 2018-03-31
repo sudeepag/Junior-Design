@@ -45,8 +45,11 @@ class DatabaseHelper:
 
     def fetch_contributions(self, goals):
         conts_by_id = {}
-        for goal in goals:
-            conts_by_id[goal['id']] = goal['contributions']
+        print("-----------------LOOK AT ME-----------------------------")
+        if goals is not -1:
+            for goal in goals:
+                conts_by_id[goal['id']] = goal.get('contributions', [])
+            
         print(conts_by_id)
         return conts_by_id
 
@@ -73,6 +76,8 @@ class DatabaseHelper:
 
     def create_goal(self, project_id, name):
         print("creating goal for ", str(project_id))
+        project = self.project_for_id(str(project_id))
+        print(project)
         res = self.db.child('users').child(self.user.id).child('projects').child(project_id).child('goals').get().val()
         if res is None:
             id = 0
@@ -84,7 +89,7 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
-        self.user.projects[project_id]['goals'][id] = data
+        self.fetch_contributions(project['goals'])
         # self.user.projects.goals.append(data)
         # print("updated goals list: \n ", self.user.projects.project_id.goals)
 
@@ -111,8 +116,7 @@ class DatabaseHelper:
         print("id ", id)
         time = str(datetime.datetime.now())
         data = {"id": id, "user_id": self.user.id, "project_id": project_id, \
-                "goal_id": goal_id, "creation_date": time, "work_count": work_count,
-                 "work_type": work_type}
+                "goal_id": goal_id, "creation_date": time, "work_type": work_type, "work_count": work_count}
         self.db.child("users").child(self.user.id).child("projects").child(project_id) \
             .child("goals").child(goal_id).child("contributions").child(id) \
             .set(data)
@@ -183,3 +187,18 @@ class Goal:
         return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.paragraphs: {}\nself.pages: {}\nself.completed: {}' \
             .format(self.id, self.name, self.user_id, self.current_goal_id,
                     self.creation_date, self.last_updated, self.words, self.paragraphs, self.pages, self.completed)
+
+class Contribution:
+    def __init__(self, id, user_id, project_id, goal_id, creation_date, work_type, work_count):
+        self.id = id
+        self.user_id = user_id
+        self.project_id = project_id
+        self.goal_id = goal_id
+        self.creation_date = creation_date
+        self.work_type = work_type
+        self.work_count = work_count
+
+    def __repr__(self):
+        return 'id: {}\nuser_id:{} \nproject_id: {}\ngoal_id: {}\ncreation_date: {}\nwork_count {}\nwork_type: {}\n' \
+            .format(self.id, self.user_id, self.project_id, self.goal_id,
+                    self.creation_date, self.work_count, self.work_type)

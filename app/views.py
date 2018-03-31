@@ -116,7 +116,7 @@ def project_management(project_id):
     print('caling project_for_id with id', project_id)
     project = db.project_for_id(project_id)
     print(project)
-    conts_by_id = db.fetch_contributions(project['goals']) # dict of goal ids : [contributions]
+    conts_by_id = db.fetch_contributions(project.get('goals', -1)) # dict of goal ids : [contributions]
     return render_template('project_management.html', page_name=project['name'], project=project, conts_by_id=conts_by_id)
 
 @app.route('/analytics')
