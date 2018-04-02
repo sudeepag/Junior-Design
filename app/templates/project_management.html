@@ -41,7 +41,7 @@
 					</li> \
 				</ul> \
 				<div class="mdl-grid mdl-grid mdl-cell--12-col"> \
-					<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored analytics-button" href="/analytics"> \
+					<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored analytics-button"> \
 						<div class="material-icons">show_chart</div> View Analytics \
 					</a> \
 				</div>'
@@ -381,8 +381,16 @@
 			alert("FOOBAR");
 			return true;
 		}
+		$(document).on('click', '.analytics-button', function() {
+	    	// var project_id =  $(this).attr('data-name');
+	    	var project_id = '{{project['id']}}';
+	    	// console.log(project_id);
+	    	window.location.replace('{{ url_for('analytics', project_id=project_id) }}'+project_id);
+	        // console.log($(this).attr('data-name'));
+	    });
 	</script>
 {% endblock scripts %}
+
 
 {% block content %}
 <div class="mdl-cell--8-col content-goals">
