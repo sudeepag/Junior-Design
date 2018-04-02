@@ -93,7 +93,11 @@
 		var data = [pages_trace];
 		Plotly.newPlot('pages_div', data, layout);
 	}
-
+    $(document).on('click', '.return-button', function() {
+	   	var project_id = '{{project['id']}}';
+	 	var url = window.location.href;
+	 	window.location.replace(url.substring(0, url.indexOf('analytics')) + 'projects/' + project_id)
+	});
 	wordsPlot()
 	paragraphsPlot()
 	pagesPlot()
@@ -121,6 +125,9 @@
               </svg>
             </div> -->
             <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored return-button">
+                  <div class="material-icons">keyboard_backspace</div> Return to Project
+                </a>
             	<div id='words_div'></div>
             	<div id='paragraphs_div'></div>
             	<div id='pages_div'></div>
