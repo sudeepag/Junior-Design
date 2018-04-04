@@ -115,7 +115,11 @@ def add_work():
 def project_management(project_id):
     project = db.project_for_id(project_id)
     print(project)
-    return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']))
+    try:
+        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']))
+
+    except:
+        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=0)
 
 @app.route('/analytics/<project_id>')
 @login_required
