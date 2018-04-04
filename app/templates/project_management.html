@@ -9,7 +9,7 @@
 <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 <!--print(project['goals'][0]['completed']) : False-->
 <script>
-		addOverview('{{project.creation_date}}', '{{project.words}}');
+		addOverview('{{project.creation_date}}', '{{num_goals}}');
 		{% for goal in project['goals'] %}
 			if('{{goal["completed"]}}' === 'True') {
 				addCompletedGoals('{{goal["name"]}}', '{{goal["id"]}}')
@@ -17,7 +17,7 @@
 				addGoalsInProgress('{{goal["name"]}}', '{{goal["id"]}}')
 			}
 		{% endfor %}
-		function addOverview(date, words) {
+		function addOverview(date, num_goals) {
 			document.getElementById("overview").innerHTML += (
 				'<div class="mdl-grid mdl-grid mdl-cell--12-col content-header"> \
 					<div class="material-icons">assignment</div> Project Overview \
@@ -31,12 +31,7 @@
 					</li> \
 					<li class="mdl-list__item"> \
 					<span class="mdl-list__item-primary-content"> \
-					  <b>Number of Contributions: </b>' + 'put contributions here' +
-					'</span> \
-					</li> \
-					<li class="mdl-list__item"> \
-					<span class="mdl-list__item-primary-content"> \
-					  <b>Total Words Added: </b>' + words +
+					  <b>Total Number of Goals: </b>' + num_goals +
 					'</span> \
 					</li> \
 				</ul> \
@@ -64,7 +59,7 @@
 							'<hr> \
 						</div> \
 						<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton"> \
-							Contribution History \
+							 Contribution History \
 						</button> \
 					</div> \
 				</div>'
