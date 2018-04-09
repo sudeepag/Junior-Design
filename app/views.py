@@ -33,7 +33,8 @@ def logout():
 @login_required
 def main():
     db.fetch_projects()
-    return render_template('homepage.html', page_name="Projects", user_id=str(db.user.id), projects=db.user.projects)
+    render_template('dashboard.html', username=db.user.first_name)
+    return render_template('homepage.html', page_name="Projects", user_id=str(db.user.id), projects=db.user.projects, username=db.user.first_name)
 
 @app.route('/new_project', methods=['POST'])
 @login_required
@@ -116,10 +117,10 @@ def project_management(project_id):
     project = db.project_for_id(project_id)
     print(project)
     try:
-        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']))
+        return render_template('project_management.html', page_name=project['name'], project=project, username=db.user.first_name, num_goals=len(project['goals']))
 
     except:
-        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=0)
+        return render_template('project_management.html', page_name=project['name'], project=project, username=db.user.first_name, num_goals=0)
 
 @app.route('/analytics/<project_id>')
 @login_required
@@ -127,7 +128,7 @@ def analytics(project_id):
     db.fetch_projects()
     project = db.project_for_id(project_id)
     print(project)
-    return render_template('analytics.html', page_name=project['name'], project=project)
+    return render_template('analytics.html', page_name=project['name'], project=project, username=db.user.first_name)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
