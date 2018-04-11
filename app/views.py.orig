@@ -113,14 +113,14 @@ def add_work():
 @app.route('/projects/<project_id>')
 @login_required
 def project_management(project_id):
-    project = db.project_for_id(project_id)    
+    project = db.project_for_id(project_id)
     print(project)
-    goals = project.get('goals', 0)
-    num_goals = goals if goals == 0 else len(goals)
-    conts_by_id = db.fetch_contributions(project)
-    print(conts_by_id)
-    return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']), conts_by_id=conts_by_id)
-    
+    try:
+        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']))
+
+    except:
+        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=0)
+
 @app.route('/analytics/<project_id>')
 @login_required
 def analytics(project_id):

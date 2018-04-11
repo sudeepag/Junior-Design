@@ -117,33 +117,26 @@
 			</form>
 		`;
 
-		function createWorkHistory(goal_id) {
-		    console.log(goal_id);
-            var contributions = '{{conts_by_id[0][0]}}';
-            console.log(contributions)
-            var innerText = "";
-            for (i = 0; i < 7; i++) {
-                console.log('{{conts_by_id[0]['+ i + ']}}');
-                // console.log(contribution['creation_date']);
-                // console.log(contribution['work_count']);
-                // console.log(contribution['work_type']);
-                // innerText += createListItem(contribution['creation_date'], contribution['work_count'], contribution['work_type']);
-            }
+		function wtf(goal_id) {
+			var innerText = "";
+			goal_id = parseInt(goal_id);
+			console.log(typeof goal_id)
+			console.log(goal_id);
+			{% for contribution in conts_by_id[0] %}
+				innerText += createListItem('{{contribution["i"]}}', '{{contribution["creation_date"]}}', '{{contribution["work_count"]}}', '{{contribution["work_type"]}}');
+			{% endfor %}
+			innerText = '<ul class="demo-list-control mdl-list">' + innerText + '</ul>'
+			console.log(innerText);
+			return innerText;
+		} 
 
-            var workHistory = ' \
-			<ul class="demo-list-control mdl-list"> \
-			'+ innerText +' \
-			</ul> \
-			';
-            return workHistory;
-		}
 
-        function createListItem(time, workCount, workType) {
+        function createListItem(id, time, workCount, workType) {
             return '\
             <li class="mdl-list__item"> \
                 <span class="mdl-list__item-primary-content"> \
 					<i class="material-icons  mdl-list__item-avatar">access_time</i> \
-					<div class="full-width"> \
+					<div class="full-width", id=' + id + '> \
 						<b>' + time +'</b> \
 					</div> \
 					<div class="full-width"> \
@@ -314,7 +307,7 @@
             var card = $(this).closest('.goal-card');
             var goal_id = card[0].dataset.name;
             console.log(goal_id);
-            var workHistory = createWorkHistory(goal_id);
+            var workHistory = wtf(goal_id);
             showDialog({
 				title: 'Goal Progress History',
 		        text: workHistory,

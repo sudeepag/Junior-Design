@@ -43,14 +43,13 @@ class DatabaseHelper:
             for project in self.user.projects:
                 print(project)
 
-    def fetch_contributions(self, goals):
+    def fetch_contributions(self, project):
         conts_by_id = {}
-        print("-----------------LOOK AT ME-----------------------------")
+        goals = project.get('goals', -1)
         if goals is not -1:
             for goal in goals:
                 conts_by_id[goal['id']] = goal.get('contributions', [])
             
-        print(conts_by_id)
         return conts_by_id
 
     def create_user(self, first_name, last_name, email, password):
@@ -89,7 +88,7 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
-        self.fetch_contributions(project['goals'])
+        self.fetch_contributions(project)
         # self.user.projects.goals.append(data)
         # print("updated goals list: \n ", self.user.projects.project_id.goals)
 
