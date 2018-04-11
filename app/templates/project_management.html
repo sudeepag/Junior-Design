@@ -117,7 +117,7 @@
 			</form>
 		`;
 
-		function wtf(goal_id) {
+		function createWorkHistory(goal_id) {
 			var innerText = "";
 			goal_id = parseInt(goal_id);
 			console.log(typeof goal_id)
@@ -307,7 +307,7 @@
             var card = $(this).closest('.goal-card');
             var goal_id = card[0].dataset.name;
             console.log(goal_id);
-            var workHistory = wtf(goal_id);
+            var workHistory = createWorkHistory(goal_id);
             showDialog({
 				title: 'Goal Progress History',
 		        text: workHistory,
