@@ -6,6 +6,23 @@
 
 {% block scripts %}
 
+<!-- Stuff for goals
+						<div class="mdl-cell mdl-cell--12-col">
+						<div class="mdl-cell--12-col">
+							<b>Words Added: </b><div class='total-words'>0 words</div>
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Paragraphs Added: </b><div class='total-paragraphs'>0 paragraphs</div>
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Pages Added: </b><div class='total-pages'>0 pages</div>
+						</div>
+						<div class="mdl-cell--12-col">
+							<b>Last Updated: </b><div class='last-updated'>{3}</div>
+						</div>
+					</div>
+				-->
+
 <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 <!--print(project['goals'][0]['completed']) : False-->
 <script>
@@ -93,6 +110,14 @@
 		});
 		var addGoalForm = `
 			<form action="#" class="modal-form">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<select class="mdl-textfield__input" id="goalType" name="goalType">
+					<option></option>
+					<option value="Drafting">Drafting</option>
+					<option value="Revising">Revising</option>
+					</select>
+					<label class="mdl-textfield__label" for="goalType">Type of Goal</label>
+				</div>
 				<div class="mdl-textfield mdl-js-textfield">
 					<input class="mdl-textfield__input" type="textarea" id="goal" />
 					<label class="mdl-textfield__label" for="goal">Goal</label>
@@ -186,23 +211,11 @@
 						{2}
 						<hr>
 					</div>
-					<div class="mdl-cell mdl-cell--12-col">
-						<div class="mdl-cell--12-col">
-							<b>Words Added: </b><div class='total-words'>0 words</div>
-						</div>
-						<div class="mdl-cell--12-col">
-							<b>Paragraphs Added: </b><div class='total-paragraphs'>0 paragraphs</div>
-						</div>
-						<div class="mdl-cell--12-col">
-							<b>Pages Added: </b><div class='total-pages'>0 pages</div>
-						</div>
-						<div class="mdl-cell--12-col">
-							<b>Last Updated: </b><div class='last-updated'>{3}</div>
-						</div>
-					</div>
+
 					<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
 		  				Contribution History
 					</button>
+					{3}
 				</div>
 			</div>
 		`;
@@ -218,12 +231,15 @@
 						var goal = $("#goal").val();
                         var project_id = '{{ project.id }}';
 						console.log(goal);
+						var goalType = $('#goalType').val();
+						console.log(goalType);
 	            		if (goal) {
 	            			var currentTime = moment();
 	            			var newGoalHtml =  newGoalFormat.format(
 									goal,
 									currentTime.format('MMMM Do YYYY, h:mm:ss a'),
 									goal,
+									goalType,
 									currentTime.calendar());
 	            			var element = document.getElementsByClassName('in-progress-goals')[0]
 							console.log('goal created');
@@ -233,7 +249,7 @@
 							console.log(project_id);
 
 							$.ajax({
-                                data: {'project': project_id,'goal_name': goal},
+                                data: {'project': project_id,'goal_name': goal, 'goal_type': goalType},
                                 url: '/new_goal',
                                 type: 'POST',
 

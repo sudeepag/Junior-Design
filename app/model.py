@@ -64,7 +64,7 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id).remove()
         print('Successful removal of a project!')
 
-    def create_goal(self, project_id, name):
+    def create_goal(self, project_id, name, goal_type):
         print("creating goal for ", str(project_id))
         res = self.db.child('users').child(self.user.id).child('projects').child(project_id).child('goals').get().val()
         if res is None:
@@ -73,7 +73,7 @@ class DatabaseHelper:
             id = len(res)
         print("id ", id)
         time = str(datetime.datetime.now())
-        data = {"id": id, "user_id": self.user.id, "project_id": project_id, "name": name, "creation_date": time, "completed": False}
+        data = {"id": id, "user_id": self.user.id, "project_id": project_id, "name": name, "type": goal_type, "creation_date": time, "completed": False}
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
@@ -160,11 +160,12 @@ class Project:
 
 
 class Goal:
-    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words, paragraphs, pages, completed):
+    def __init__(self, id, name, user_id, current_goal_id, goal_type, creation_date, last_updated, words, paragraphs, pages, completed):
         self.id = id
         self.name = name
         self.user_id = user_id
         self.current_goal_id = current_goal_id
+        self.type = goal_type
         self.creation_date = creation_date
         self.last_updated = last_updated
         self.words = words
@@ -173,6 +174,6 @@ class Goal:
         self.completed = completed
 
     def __repr__(self):
-        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.paragraphs: {}\nself.pages: {}\nself.completed: {}' \
-            .format(self.id, self.name, self.user_id, self.current_goal_id,
+        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ngoal_type: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.paragraphs: {}\nself.pages: {}\nself.completed: {}' \
+            .format(self.id, self.name, self.user_id, self.current_goal_id, self.goal_type,
                     self.creation_date, self.last_updated, self.words, self.paragraphs, self.pages, self.completed)
