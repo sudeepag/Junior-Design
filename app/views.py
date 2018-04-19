@@ -11,17 +11,18 @@ login_manager.login_view = "login"
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
-def login(request):
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        try:
-            db.sign_in(email, password)
-            login_user(db.user)
-            return redirect(url_for('main'))
-        except Exception as e:
-            return render_template("error.html", error = str(e))
+def login():
     return render_template("login.html")
+    # if request.method == 'POST':
+    #     email = request.form['email']
+    #     password = request.form['password']
+    #     try:
+    #         db.sign_in(email, password)
+    #         login_user(db.user)
+    #         return redirect(url_for('main'))
+    #     except Exception as e:
+    #         return render_template("error.html", error = str(e))
+    # return render_template("login.html")
 
 @app.route("/logout")
 @login_required

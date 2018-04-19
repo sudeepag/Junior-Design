@@ -5,4 +5,5 @@ Jinja2==2.10
 MarkupSafe==1.0
 Werkzeug==0.12.2
 Pyrebase==3.0.27
-flask-login
+Flask-Login
+gunicorn
