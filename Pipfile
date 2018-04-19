@@ -9,6 +9,14 @@ verify_ssl = true
 django = "*"
 gunicorn = "*"
 django-heroku = "*"
+Flask = "*"
+click = "*"
+itsdangerous = "*"
+Jinja2 = "*"
+MarkupSafe = "*"
+Werkzeug = "*"
+Pyrebase = "*"
+Flask-Login = "*"
 
 
 [requires]
