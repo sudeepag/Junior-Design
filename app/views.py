@@ -11,7 +11,7 @@ login_manager.login_view = "login"
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def login(request):
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
