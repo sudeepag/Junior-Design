@@ -61,7 +61,7 @@
 		}
 		function addGoalsInProgress(name, id, type) {
 			document.getElementById("in-progress-goals").innerHTML += (
-				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '"> \
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '" goal-type="' + type.substring(0,1) + '"> \
 					<div class="goal-action"> \
 						<div class="goal-circle"> \
 							<div class="goal-circle-text">'
@@ -89,7 +89,7 @@
 		}
 		function addCompletedGoals(name, id, type) {
 			document.getElementById("completed-goals").innerHTML += (
-				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '"> \
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '" goal-type="' + type.substring(0,1) + '"> \
 					<div class="goal-action"> \
 						<div class="goal-circle"> \
 							<div class="goal-circle-text">'
@@ -204,6 +204,11 @@
 			</button>
 		`;
 		var inProgressButtons = `
+			<div class="goal-circle">
+				<div class="goal-circle-text">
+					{0}
+				</div>
+			</div>
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
 	  			Add work
 			</button>
@@ -212,7 +217,7 @@
 			</button>
 		`;
 		var newGoalFormat = `
-			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" words-total=0 paragraphs-total=0 pages-total=0 data-updated="{1}">
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" words-total=0 paragraphs-total=0 pages-total=0 data-updated="{1}" goal-type="{3}">
 				<div class="goal-action">
 					<div class="goal-circle">
 						<div class="goal-circle-text">
@@ -356,7 +361,7 @@
 			var goal = card[0].dataset.name;
 			console.log('card',card);
 			console.log('id',goal);
-			var goalType = card[0].firstElementChild.firstElementChild.firstElementChild.textContent;
+			var goalType = card[0].attributes[2].value;
 			console.log('goalType', goalType);
 			$.ajax({
 				url: '/complete_goal',
@@ -378,18 +383,20 @@
 		});
 		$(document).on('click', '.revert-button', function() {
 			var card = $(this).closest('.goal-card');
-			card.prependTo('.in-progress-goals');
+			console.log('card',card);
+			var goalType = card[0].attributes[2].value;
+			console.log('goalType', goalType);
             var project_id = '{{ project.id }}';
             var goal = card.attr('data-name');
-			console.log('card',card);
 			console.log('id',goal);
+			card.prependTo('.in-progress-goals');
 			$.ajax({
 				url: '/revert_goal',
 				data: {'project_id': project_id, 'goal_id': goal},
 				type: 'POST',
 
 				success: function(response){
-					console.log();
+					console.log(response);
 				},
 				error: function(error){
 					console.log(error);
@@ -397,8 +404,8 @@
 			});
 			// Clears the buttons sections and updates it with the add work/complete buttons
 			var buttonSection = card.find('.goal-action');
-			buttonSection.empty()
-			buttonSection.html(inProgressButtons)
+			buttonSection.empty();
+			buttonSection.html(inProgressButtons.format(goalType));
 		});
 		function addGoalForm() {
 			alert("FOOBAR");

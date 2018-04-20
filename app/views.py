@@ -95,7 +95,7 @@ def revert_goal():
             db.revert_goal(project_id, goal_id)
             return goal_id
         except Exception as e:
-            print(e)
+            print('Error ', e)
             return render_template("error.html", error = str(e))
 
 @app.route('/add_work', methods=['POST'])
