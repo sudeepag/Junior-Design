@@ -67,8 +67,10 @@ def new_goal():
         print("project name", project_id)
         goal_name = request.form['goal_name']
         print("goal name ", goal_name)
+        goal_type = request.form['goal_type']
+        print("goal type ", goal_type)
         try:
-            db.create_goal(int(project_id), goal_name)
+            db.create_goal(int(project_id), goal_name, goal_type)
             return goal_name
         except Exception as e:
             return render_template("error.html", error = str(e))
@@ -93,7 +95,7 @@ def revert_goal():
             db.revert_goal(project_id, goal_id)
             return goal_id
         except Exception as e:
-            print(e)
+            print('Error ', e)
             return render_template("error.html", error = str(e))
 
 @app.route('/add_work', methods=['POST'])

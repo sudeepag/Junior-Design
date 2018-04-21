@@ -73,7 +73,7 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id).remove()
         print('Successful removal of a project!')
 
-    def create_goal(self, project_id, name):
+    def create_goal(self, project_id, name, goal_type):
         print("creating goal for ", str(project_id))
         project = self.project_for_id(str(project_id))
         print(project)
@@ -84,7 +84,7 @@ class DatabaseHelper:
             id = len(res)
         print("id ", id)
         time = str(datetime.datetime.now())
-        data = {"id": id, "user_id": self.user.id, "project_id": project_id, "name": name, "creation_date": time, "completed": False}
+        data = {"id": id, "user_id": self.user.id, "project_id": project_id, "name": name, "type": goal_type, "creation_date": time, "completed": False}
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
@@ -96,12 +96,12 @@ class DatabaseHelper:
     def complete_goal(self, project_id, goal_id):
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(True)
-        print('Successful completion of a goal!\n%s' % str(new_goal))
+        print('Successful completion of a goal!\n%s' % str(goal_id))
 
     def revert_goal(self, project_id, goal_id):
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(False)
-        print('Successful reverted a goal!\n%s' % str(new_goal))
+        print('Successful reverted a goal!\n%s' % str(goal_id))
 
     def create_contribution(self, project_id, goal_id, work_type, work_count):
         print("creating contribution for ", str(goal_id))
@@ -170,11 +170,12 @@ class Project:
 
 
 class Goal:
-    def __init__(self, id, name, user_id, current_goal_id, creation_date, last_updated, words, paragraphs, pages, completed):
+    def __init__(self, id, name, user_id, current_goal_id, goal_type, creation_date, last_updated, words, paragraphs, pages, completed):
         self.id = id
         self.name = name
         self.user_id = user_id
         self.current_goal_id = current_goal_id
+        self.type = goal_type
         self.creation_date = creation_date
         self.last_updated = last_updated
         self.words = words

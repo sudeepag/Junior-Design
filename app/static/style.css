@@ -18,12 +18,28 @@
 }
 
 .content-header hr {
+    float:right;
     margin: 11px 0px 0px 0px;
     width: 100%;
 }
 
 .content-goals {
     margin:15px;
+}
+
+.goal-circle {
+    color: white;
+    background: #757575;
+    font-weight: bold;
+    font-size: 20px !important;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+}
+
+.goal-circle-text {
+    margin-top:5%;
+    text-align: center;
 }
 
 .goal-action {
@@ -45,13 +61,13 @@
 }
 
 .goal-card-description {
+    float:right;
 	width: calc(100% - 120px);
 
 }
 
 .goal-history {
     float:right;
-    margin-top:-146px;
 }
 
 .project-circle {
