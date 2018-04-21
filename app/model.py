@@ -86,13 +86,12 @@ class DatabaseHelper:
     def complete_goal(self, project_id, goal_id):
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(True)
-        print('Successful completion of a goal!\n%s' % str(self.db.child("users").child(self.user.id).child("projects")
-                                                           .child(project_id).child("goals").child(goal_id)))
+        print('Successful completion of a goal!\n%s' % str(goal_id))
 
     def revert_goal(self, project_id, goal_id):
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
             .child("completed").set(False)
-        print('Successful reverted a goal!\n%s' % str(new_goal))
+        print('Successful reverted a goal!\n%s' % str(goal_id))
 
     def create_contribution(self, project_id, goal_id, work_type, work_count):
         print("creating contribution for ", str(goal_id))
