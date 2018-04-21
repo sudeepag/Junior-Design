@@ -116,28 +116,12 @@ def add_work():
 def project_management(project_id):
     project = db.project_for_id(project_id)    
     print(project)
-<<<<<<< HEAD
     goals = project.get('goals', 0)
     num_goals = goals if goals == 0 else len(goals)
     conts_by_id = db.fetch_contributions(project)
     print(conts_by_id)
     return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']), conts_by_id=conts_by_id)
-    
-||||||| merged common ancestors
-    try:
-        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']))
 
-    except:
-        return render_template('project_management.html', page_name=project['name'], project=project, num_goals=0)
-
-=======
-    try:
-        return render_template('project_management.html', page_name=project['name'], project=project, username=db.user.first_name, num_goals=len(project['goals']))
-
-    except:
-        return render_template('project_management.html', page_name=project['name'], project=project, username=db.user.first_name, num_goals=0)
-
->>>>>>> 2ad9579859d927f996063f4beb0fb0dfd5aa1b6b
 @app.route('/analytics/<project_id>')
 @login_required
 def analytics(project_id):

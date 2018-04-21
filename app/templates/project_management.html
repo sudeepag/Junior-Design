@@ -119,10 +119,14 @@
 
 		function createWorkHistory(goal_id) {
 			var innerText = "";
-			goal_id = parseInt(goal_id);
+			console.log('{{conts_by_id}}')
+			// goal_id = parseInt(goal_id);
+			goal_id = goal_id.toString()
 			console.log(typeof goal_id)
 			console.log(goal_id);
-			{% for contribution in conts_by_id[0] %}
+			conts = '{{conts_by_id['+ goal_id +']}}'
+			console.log(conts)
+			{% for contribution in conts %}
 				innerText += createListItem('{{contribution["i"]}}', '{{contribution["creation_date"]}}', '{{contribution["work_count"]}}', '{{contribution["work_type"]}}');
 			{% endfor %}
 			innerText = '<ul class="demo-list-control mdl-list">' + innerText + '</ul>'
@@ -136,19 +140,19 @@
             <li class="mdl-list__item"> \
                 <span class="mdl-list__item-primary-content"> \
 					<i class="material-icons  mdl-list__item-avatar">access_time</i> \
-					<div class="full-width", id=' + id + '> \
+					<div class="full-width"> \
 						<b>' + time +'</b> \
 					</div> \
 					<div class="full-width"> \
 						' + workCount + workType + ' \
 					</div> \
             	</span> \
-				<button id="workHistoryItem1"\
+				<button id=' + id + '\
 					class="mdl-button mdl-js-button mdl-button--icon"> \
 				<i class="material-icons">more_vert</i> \
 					</button> \
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" \
-            		for="workHistoryItem1"> \
+            		for=' + id + '> \
 						<li class="mdl-menu__item mdl-color-text--red">Delete</li> \
 				</ul>\
 			</li>\
