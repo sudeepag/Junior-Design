@@ -109,6 +109,8 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id) \
             .child("goals").child(goal_id).child("contributions").child(id) \
             .set(data)
+        self.db.child("users").child(self.user.id).child("projects").child(project_id) \
+            .child("last_updated")
         print("set data in firebase")
 
     def project_for_id(self, id):
