@@ -43,15 +43,6 @@ class DatabaseHelper:
             for project in self.user.projects:
                 print(project)
 
-    def fetch_contributions(self, project):
-        conts_by_id = {}
-        goals = project.get('goals', -1)
-        if goals is not -1:
-            for goal in goals:
-                conts_by_id[goal['id']] = goal.get('contributions', [])
-            
-        return conts_by_id
-
     def create_user(self, first_name, last_name, email, password):
         db_user = self.auth.create_user_with_email_and_password(email, password)
         data = {"first_name": first_name, "last_name": last_name, "email": email}
@@ -75,8 +66,6 @@ class DatabaseHelper:
 
     def create_goal(self, project_id, name, goal_type):
         print("creating goal for ", str(project_id))
-        project = self.project_for_id(str(project_id))
-        print(project)
         res = self.db.child('users').child(self.user.id).child('projects').child(project_id).child('goals').get().val()
         if res is None:
             id = 0
@@ -88,7 +77,7 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(id) \
             .set(data)
         print("set data in firebase")
-        self.fetch_contributions(project)
+        self.user.projects[project_id]['goals'][id] = data
         # self.user.projects.goals.append(data)
         # print("updated goals list: \n ", self.user.projects.project_id.goals)
 
@@ -115,10 +104,13 @@ class DatabaseHelper:
         print("id ", id)
         time = str(datetime.datetime.now())
         data = {"id": id, "user_id": self.user.id, "project_id": project_id, \
-                "goal_id": goal_id, "creation_date": time, "work_type": work_type, "work_count": work_count}
+                "goal_id": goal_id, "creation_date": time, "work_count": work_count,
+                 "work_type": work_type}
         self.db.child("users").child(self.user.id).child("projects").child(project_id) \
             .child("goals").child(goal_id).child("contributions").child(id) \
             .set(data)
+        self.db.child("users").child(self.user.id).child("projects").child(project_id) \
+            .child("last_updated")
         print("set data in firebase")
 
     def project_for_id(self, id):
@@ -184,21 +176,6 @@ class Goal:
         self.completed = completed
 
     def __repr__(self):
-        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.paragraphs: {}\nself.pages: {}\nself.completed: {}' \
-            .format(self.id, self.name, self.user_id, self.current_goal_id,
+        return 'id: {}\nname:{} \nuser_id: {}\ncurrent_goal_id: {}\ngoal_type: {}\ncreation_date: {}\nlast_updated: {}\nself.words: {}\nself.paragraphs: {}\nself.pages: {}\nself.completed: {}' \
+            .format(self.id, self.name, self.user_id, self.current_goal_id, self.goal_type,
                     self.creation_date, self.last_updated, self.words, self.paragraphs, self.pages, self.completed)
-
-class Contribution:
-    def __init__(self, id, user_id, project_id, goal_id, creation_date, work_type, work_count):
-        self.id = id
-        self.user_id = user_id
-        self.project_id = project_id
-        self.goal_id = goal_id
-        self.creation_date = creation_date
-        self.work_type = work_type
-        self.work_count = work_count
-
-    def __repr__(self):
-        return 'id: {}\nuser_id:{} \nproject_id: {}\ngoal_id: {}\ncreation_date: {}\nwork_count {}\nwork_type: {}\n' \
-            .format(self.id, self.user_id, self.project_id, self.goal_id,
-                    self.creation_date, self.work_count, self.work_type)
