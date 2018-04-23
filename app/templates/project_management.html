@@ -280,7 +280,7 @@
 					</li>\
 				';
 		}
-
+		var addedGoalCount = 0;
 		$('#add-goal-button').click(function() {
 			showDialog({
 		        text: addGoalForm,
@@ -297,8 +297,13 @@
 						console.log(goalType);
 	            		if (goal) {
 	            			var currentTime = moment();
+	            			id = addedGoalCount;
+	            			{% for goal in project['goals'] %}
+								id++;
+							{% endfor %}
+							addedGoalCount++;
 	            			var newGoalHtml =  newGoalFormat.format(
-									goal,
+									id,
 									currentTime.format('MMMM Do YYYY, h:mm:ss a'),
 									goal,
 									goalType.substring(0, 1),

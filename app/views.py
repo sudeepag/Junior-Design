@@ -120,9 +120,7 @@ def project_management(project_id):
     print(project)
     goals = project.get('goals', 0)
     num_goals = goals if goals == 0 else len(goals)
-    conts_by_id = db.fetch_contributions(project)
-    print(conts_by_id)
-    return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project['goals']), conts_by_id=conts_by_id)
+    return render_template('project_management.html', page_name=project['name'], project=project, num_goals=len(project.get('goals', [])))
 
 @app.route('/analytics/<project_id>')
 @login_required
