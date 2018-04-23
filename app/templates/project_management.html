@@ -29,9 +29,9 @@
 		addOverview('{{project.creation_date}}', '{{num_goals}}');
 		{% for goal in project['goals'] %}
 			if('{{goal["completed"]}}' === 'True') {
-				addCompletedGoals('{{goal["name"]}}', '{{goal["id"]}}')
+				addCompletedGoals('{{goal["name"]}}', '{{goal["id"]}}', '{{goal["type"]}}')
 			} else {
-				addGoalsInProgress('{{goal["name"]}}', '{{goal["id"]}}')
+				addGoalsInProgress('{{goal["name"]}}', '{{goal["id"]}}', '{{goal["type"]}}')
 			}
 		{% endfor %}
 		function addOverview(date, num_goals) {
@@ -59,10 +59,15 @@
 				</div>'
 			);
 		}
-		function addGoalsInProgress(name, id) {
+		function addGoalsInProgress(name, id, type) {
 			document.getElementById("in-progress-goals").innerHTML += (
-				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '"> \
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '" goal-type="' + type.substring(0,1) + '"> \
 					<div class="goal-action"> \
+						<div class="goal-circle"> \
+							<div class="goal-circle-text">'
+								+ type.substring(0,1) +
+							'</div> \
+						</div> \
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button"> \
 							Add work \
 						</button> \
@@ -82,10 +87,15 @@
 				</div>'
 			);
 		}
-		function addCompletedGoals(name, id) {
+		function addCompletedGoals(name, id, type) {
 			document.getElementById("completed-goals").innerHTML += (
-				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '"> \
+				'<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="' + id + '" goal-type="' + type.substring(0,1) + '"> \
 					<div class="goal-action"> \
+						<div class="goal-circle"> \
+							<div class="goal-circle-text">'
+								+ type.substring(0,1) +
+							'</div> \
+						</div> \
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button"> \
 							Revert \
 						</button> \
@@ -184,11 +194,21 @@
 			</ul>
 		`;
 		var completedGoalButton = `
+			<div class="goal-circle">
+				<div class="goal-circle-text">
+					{0}
+				</div>
+			</div>
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored revert-button">
 	  			Revert
 			</button>
 		`;
 		var inProgressButtons = `
+			<div class="goal-circle">
+				<div class="goal-circle-text">
+					{0}
+				</div>
+			</div>
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
 	  			Add work
 			</button>
@@ -197,8 +217,13 @@
 			</button>
 		`;
 		var newGoalFormat = `
-			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" words-total=0 paragraphs-total=0 pages-total=0 data-updated="{1}">
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid mdl-grid mdl-cell--12-col goal-card" data-name="{0}" words-total=0 paragraphs-total=0 pages-total=0 data-updated="{1}" goal-type="{3}">
 				<div class="goal-action">
+					<div class="goal-circle">
+						<div class="goal-circle-text">
+							{3}
+						</div>
+					</div>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored add-work-button">
 			  			Add work
 					</button>
@@ -215,10 +240,47 @@
 					<button class="mdl-button mdl-js-button mdl-button--primary goal-history" data-upgraded=",MaterialButton">
 		  				Contribution History
 					</button>
-					{3}
 				</div>
 			</div>
 		`;
+
+		function createWorkHistory(goal_id) {
+			var innerText = "";
+			{% for goal in project['goals'] %}
+				if ('{{goal["id"]}}' == goal_id) {
+					{% for contribution in goal['contributions'] %}
+						innerText += createListItem('{{contribution["id"]}}', '{{contribution["creation_date"]}}'.substring(0, 16), '{{contribution["work_count"]}}', '{{contribution["work_type"]}}');
+					{% endfor %}
+				}
+			{% endfor %}
+			innerText = '<ul class="demo-list-control mdl-list">' + innerText + '</ul>';
+			return innerText;
+		}
+
+		function createListItem(id, time, workCount, workType) {
+				return '\
+					<li class="mdl-list__item"> \
+						<span class="mdl-list__item-primary-content"> \
+							<i class="material-icons  mdl-list__item-avatar">access_time</i> \
+							<div class="full-width"> \
+								<b>' + time +'</b> \
+							</div> \
+							<div class="full-width"> \
+								' + workCount + ' ' + workType + ' \
+							</div> \
+						</span> \
+						<button id=' + id + '\
+							class="mdl-button mdl-js-button mdl-button--icon"> \
+							<i class="material-icons">more_vert</i> \
+						</button> \
+							<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" \
+								 for=' + id + '> \
+								 <li class="mdl-menu__item mdl-color-text--red">Delete</li> \
+							</ul>\
+					</li>\
+				';
+		}
+		var addedGoalCount = 0;
 		$('#add-goal-button').click(function() {
 			showDialog({
 		        text: addGoalForm,
@@ -235,11 +297,16 @@
 						console.log(goalType);
 	            		if (goal) {
 	            			var currentTime = moment();
+	            			id = addedGoalCount;
+	            			{% for goal in project['goals'] %}
+								id++;
+							{% endfor %}
+							addedGoalCount++;
 	            			var newGoalHtml =  newGoalFormat.format(
-									goal,
+									id,
 									currentTime.format('MMMM Do YYYY, h:mm:ss a'),
 									goal,
-									goalType,
+									goalType.substring(0, 1),
 									currentTime.calendar());
 	            			var element = document.getElementsByClassName('in-progress-goals')[0]
 							console.log('goal created');
@@ -322,14 +389,17 @@
 	            }
 	        });
 		});
-        $(document).on('click', '.goal-history', function() {
-			showDialog({
-				title: 'Goal Progress History',
-		        text: workHistory,
-		        positive: {
-	            	title: 'OK',
-	            }
-	        });
+      $(document).on('click', '.goal-history', function() {
+				var card = $(this).closest('.goal-card');
+				var goal = card[0].dataset.name;
+				console.log("goal id " + goal);
+				showDialog({
+					title: 'Goal Progress History',
+			        text: createWorkHistory(goal),
+			        positive: {
+		            	title: 'OK',
+		            }
+		        });
 		});
 		$(document).on('click', '.complete-goal-button', function() {
 			var card = $(this).closest('.goal-card');
@@ -337,6 +407,8 @@
 			var goal = card[0].dataset.name;
 			console.log('card',card);
 			console.log('id',goal);
+			var goalType = card[0].attributes[2].value;
+			console.log('goalType', goalType);
 			$.ajax({
 				url: '/complete_goal',
 				data: {'project_id': project_id, 'goal_id': goal},
@@ -352,23 +424,25 @@
 			card.prependTo('.completed-goals');
 			// Clears the buttons sections and updates it with the revert button
 			var buttonSection = card.find('.goal-action');
-			buttonSection.empty()
-			buttonSection.html(completedGoalButton)
+			buttonSection.empty();
+			buttonSection.html(completedGoalButton.format(goalType));
 		});
 		$(document).on('click', '.revert-button', function() {
 			var card = $(this).closest('.goal-card');
-			card.prependTo('.in-progress-goals');
+			console.log('card',card);
+			var goalType = card[0].attributes[2].value;
+			console.log('goalType', goalType);
             var project_id = '{{ project.id }}';
             var goal = card.attr('data-name');
-			console.log('card',card);
 			console.log('id',goal);
+			card.prependTo('.in-progress-goals');
 			$.ajax({
 				url: '/revert_goal',
 				data: {'project_id': project_id, 'goal_id': goal},
 				type: 'POST',
 
 				success: function(response){
-					console.log();
+					console.log(response);
 				},
 				error: function(error){
 					console.log(error);
@@ -376,8 +450,8 @@
 			});
 			// Clears the buttons sections and updates it with the add work/complete buttons
 			var buttonSection = card.find('.goal-action');
-			buttonSection.empty()
-			buttonSection.html(inProgressButtons)
+			buttonSection.empty();
+			buttonSection.html(inProgressButtons.format(goalType));
 		});
 		function addGoalForm() {
 			alert("FOOBAR");
