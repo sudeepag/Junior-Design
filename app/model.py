@@ -39,7 +39,8 @@ class DatabaseHelper:
             if type(res) == dict:
                 res = [res]
             for r in res:
-                self.user.projects.append(r)
+                if r is not None:
+                    self.user.projects.append(r)
             for project in self.user.projects:
                 print(project)
 
@@ -50,7 +51,7 @@ class DatabaseHelper:
 
     def create_project(self, name):
         time = str(datetime.datetime.now())
-        id = len(self.user.projects)
+        id = self.user.generate_project_id()
         data = {"id": id, "user_id": self.user.id, "name": name, "current_goal_id": "None",
                 "creation_date": time, "last_updated": time, "contributions": [], "goals": []}
         self.db.child("users").child(self.user.id).child("projects").child(id).set(data)
@@ -62,15 +63,16 @@ class DatabaseHelper:
 
     def delete_project(self, project_id):
         self.db.child("users").child(self.user.id).child("projects").child(project_id).remove()
+        self.user.project_ids.remove(project_id)
         print('Successful removal of a project!')
 
     def create_goal(self, project_id, name, goal_type):
         print("creating goal for ", str(project_id))
         res = self.db.child('users').child(self.user.id).child('projects').child(project_id).child('goals').get().val()
-        if res is None:
-            id = 0
-        else:
-            id = len(res)
+        id = 0
+        if res is not None:
+            while id in [g['id'] for g in res]:
+                id += 1
         print("id ", id)
         time = str(datetime.datetime.now())
         data = {"id": id, "user_id": self.user.id, "project_id": project_id, "name": name, "type": goal_type, "creation_date": time, "completed": False}
@@ -80,7 +82,6 @@ class DatabaseHelper:
         self.user.projects[project_id]['goals'][id] = data
         # self.user.projects.goals.append(data)
         # print("updated goals list: \n ", self.user.projects.project_id.goals)
-
 
     def complete_goal(self, project_id, goal_id):
         self.db.child("users").child(self.user.id).child("projects").child(project_id).child("goals").child(goal_id) \
@@ -97,11 +98,11 @@ class DatabaseHelper:
         res = self.db.child('users').child(self.user.id).child('projects') \
                     .child(project_id).child('goals').child(goal_id).child("contributions") \
                     .get().val()
-        print(res)
-        if res is None:
-            id = 0
-        else:
-            id = len(res)
+
+        id = 0
+        if res is not None:
+            while id in [c['id'] for c in res]:
+                id += 1
         print("id ", id)
         time = str(datetime.datetime.now())
         data = {"id": id, "user_id": self.user.id, "project_id": project_id, \
@@ -110,8 +111,13 @@ class DatabaseHelper:
         self.db.child("users").child(self.user.id).child("projects").child(project_id) \
             .child("goals").child(goal_id).child("contributions").child(id) \
             .set(data)
+
+        self.db.child("users").child(self.user.id).child("projects").child(project_id) \
+            .child("last_updated")
+
         # self.db.child("users").child(self.user.id).child("projects").child(project_id) \
         #     .child("last_updated")
+
         print("set data in firebase")
 
     def project_for_id(self, id):
@@ -258,6 +264,12 @@ class User:
 
     def get_id(self):
         return self.id
+
+    def generate_project_id(self):
+        i = 0
+        while i in [p['id'] for p in self.projects]:
+            i += 1
+        return i
 
     def __repr__(self):
         return 'id: {}\ntoken: {}\nfirst_name: {}\nlast_name: {}\nemail: {}' \

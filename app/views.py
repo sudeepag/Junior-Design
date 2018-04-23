@@ -73,7 +73,7 @@ def new_goal():
             db.create_goal(int(project_id), goal_name, goal_type)
             return goal_name
         except Exception as e:
-            return render_template("error.html", error = str(e))
+            return render_template("error.html", error=str(e))
 
 @app.route('/complete_goal', methods=['POST'])
 def complete_goal():
@@ -84,7 +84,7 @@ def complete_goal():
             db.complete_goal(project_id, goal_id)
             return goal_id
         except Exception as e:
-            return render_template("error.html", error = str(e))
+            return render_template("error.html", error=str(e))
 
 @app.route('/revert_goal', methods=['POST'])
 def revert_goal():
