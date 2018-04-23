@@ -1,4 +1,12 @@
-Install Guide
+<h1>Release Notes</h1>
+
+<h2>New Features</h2>
+
+Track progress of goal completion for each project.
+Distinguish between Drafting and Revising goals.
+Delete projects you may no longer need.
+
+<h1>Install Guide</h1>
 
 First clone the repository:
 
