@@ -121,6 +121,127 @@ class DatabaseHelper:
                 return project
         return None
 
+    def weekDay(self, year, month, day):
+        offset = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
+        week   = ['Sunday', 
+                  'Monday', 
+                  'Tuesday', 
+                  'Wednesday', 
+                  'Thursday',  
+                  'Friday', 
+                  'Saturday']
+        afterFeb = 1
+        if month > 2: afterFeb = 0
+        aux = year - 1700 - afterFeb
+        # dayOfWeek for 1700/1/1 = 5, Friday
+        dayOfWeek  = 5
+        # partial sum of days betweem current date and 1700/1/1
+        dayOfWeek += (aux + afterFeb) * 365                  
+        # leap year correction    
+        dayOfWeek += aux / 4 - aux / 100 + (aux + 100) / 400     
+        # sum monthly and day offsets
+        dayOfWeek += offset[month - 1] + (day - 1)               
+        dayOfWeek %= 7
+        return dayOfWeek, week[int(dayOfWeek)]
+
+    def insights_for_project(self, project):
+        goals = project['goals']
+        contributions = []
+        for g in goals:
+            if 'contributions' in g:
+                for c in g['contributions']:
+                    contributions.append(c)
+        
+        insights = []
+
+        
+        for c  in contributions:
+
+            t = int(c['creation_date'].split(' ')[-1].split(':')[0])
+
+            # Time of day
+            morning = 0
+            afternoon = 0
+            night = 0
+            if 0 < t < 12:
+                morning += 1
+            elif 12 <= t < 17:
+                afternoon += 1
+            elif 17 <= t <= 24:
+                night += 1
+
+            # Day of week
+            mon = 0
+            tue = 0
+            wed = 0
+            thurs = 0
+            fri = 0
+            sat = 0
+            sun = 0
+
+            y = int(c['creation_date'].split(' ')[0].split('-')[0])
+            m = int(c['creation_date'].split(' ')[0].split('-')[1])
+            d = int(c['creation_date'].split(' ')[0].split('-')[2])
+            print(y, m, d)
+            day = self.weekDay(y, m, d)
+            if day == 'Monday':
+                mon += 1
+            elif day == 'Tuesday':
+                tue += 1
+            elif day == 'Wednesday':
+                wed += 1
+            elif day == 'Thursday':
+                thurs += 1
+            elif day == 'Friday':
+                fri += 1
+            elif day == 'Saturday':
+                sat += 1
+            elif day == 'Sunday':
+                sun += 1
+            print(c)
+
+            pages = 0
+            words = 0
+            paragraphs = 0
+            if c['work_type'] == 'pages':
+                pages += 1
+            elif c['work_type'] == 'words':
+                words += 1
+            elif c['work_type'] == 'paragraphs':
+                paragraphs += 1
+
+        max_t = max([morning, afternoon, night])
+        if max_t == morning:
+            insights.append("You're most productive in the morning. Rise and shine!")
+        elif max_t == afternoon:
+            insights.append("You're most productive in the afternoon.")
+        elif max_t == night:
+            insights.append("You're most productive at night. Time to burn the midnight oil!")
+
+        max_d = max([mon, tue, wed, thurs, fri, sat, sun])
+        if max_d == mon:
+            insights.append("Mondays are your best work days.")
+        elif max_d == tue:
+            insights.append("Tuesdays are your best work days.")
+        elif max_d == wed:
+            insights.append("Wednesdays are your best work days.")
+        elif max_d == thurs:
+            insights.append("Thursdays are your best work days.")
+        elif max_d == fri:
+            insights.append("Fridays are your best work days.")
+        elif max_d == sat:
+            insights.append("Saturdays are your best work days.")
+        elif max_d == sun:
+            insights.append("Sundays are your best work days.")
+
+        max_w = max([pages, words, paragraphs])
+        if max_w == pages:
+            insights.append("You tend to contribute mostly in pages.")
+        elif max_w == words:
+            insights.append("You tend to contribute mostly in words.")
+        elif max_w == paragraphs:
+            insights.append("You tend to contribute mostly in paragraphs.")
+        return insights
 
 class User:
     def __init__(self, id, token, first_name, last_name, email):

@@ -127,8 +127,9 @@ def project_management(project_id):
 def analytics(project_id):
     db.fetch_projects()
     project = db.project_for_id(project_id)
+    insights = db.insights_for_project(project)
     print(project)
-    return render_template('analytics.html', page_name=project['name'], project=project, username=db.user.first_name)
+    return render_template('analytics.html', page_name=project['name'], project=project, insights=insights, username=db.user.first_name)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
