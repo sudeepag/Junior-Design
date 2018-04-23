@@ -2,9 +2,21 @@
 
 <h2>New Features</h2>
 
-Track progress of goal completion for each project.
-Distinguish between Drafting and Revising goals.
-Delete projects you may no longer need.
+1. Track progress of goal completion for each project.
+2. Distinguish between Drafting and Revising goals.
+3. Delete projects you may no longer need.
+
+<h2>Bug Fixes</h2>
+
+1. Fixed an issue where different types of work were not being tracked correctly.
+2. Fixed an issue where the goals were not being added to "in progress" properly.
+
+<h2>Known Issues</h2>
+
+1. When there are two projects, a "None" goal appears when deleting the first project in the list.
+2. When adding work to a new goal and immediately clicking on "Analysis" you may be sent to an error page.
+3. Goals and work backend are not updating as quickly as the frontend, requiring a refresh.
+4. Deleting contribution does not work.
 
 <h1>Install Guide</h1>
 
