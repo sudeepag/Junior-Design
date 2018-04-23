@@ -20,7 +20,11 @@
 
 <h1>Install Guide</h1>
 
-First clone the repository:
+The site is hosted on Heroku and can be accessed with this link:
+
+https://writers-bloc.herokuapp.com/login
+
+If you want to run it locally, first clone the repository:
 
 https://github.com/sudeepag/Junior-Design.git
 
